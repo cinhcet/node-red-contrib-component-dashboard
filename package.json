@@ -1,0 +1,30 @@
+{
+  "name": "node-red-contrib-component-dashboard",
+  "version": "0.0.1",
+  "description": "dashboard",
+  "keywords": [
+    "node-red",
+    "dashboard"
+  ],
+  "author": "cinhcet@gmail.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "serve-static": "^1.12.0",
+    "socket.io": "^1.7.3"
+  },
+  "node-red": {
+    "nodes": {
+      "yad": "yad.js",
+      "yad-node": "nodes/yad-node.js",
+      "yad-paper-button": "nodes/yad-paper-button.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cinhcet/node-red-contrib-component-dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cinhcet/node-red-contrib-component-dashboard/issues"
+  },
+  "homepage": "https://github.com/cinhcet/node-red-contrib-component-dashboard#readme"
+}

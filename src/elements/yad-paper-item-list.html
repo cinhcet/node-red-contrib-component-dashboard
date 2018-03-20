@@ -1,0 +1,38 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+
+<dom-module id="yad-paper-item-list">
+  <template>
+    <style>
+    </style>
+    <div role="listbox">
+      <template is="dom-repeat" items="{{listItems}}">
+        <paper-item>[[item]]</paper-item>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    class YadPaperItemList extends Polymer.Element {
+      static get is() { return 'yad-paper-item-list'; }
+      static get properties() {
+        return {
+          listItems: {
+            type: Array,
+            value() {
+              return [
+                'Item 1', 'Item 2'
+              ];
+            }
+          }
+        };
+      }
+      nodeRedMsg(msg) {
+        this.listItems = msg.payload;
+      }
+    }
+    window.customElements.define(YadPaperItemList.is, YadPaperItemList);
+  </script>
+</dom-module>

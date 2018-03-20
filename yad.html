@@ -1,0 +1,24 @@
+<!-- yad configuration node -->
+
+<script type="text/x-red" data-template-name="yad-configuration">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('yad-configuration', {
+    category: 'config',
+    defaults: {
+      name: {
+        value: ''
+      }
+    },
+    label: function() {
+      return this.name;
+    }
+  });
+</script>
+
+<!-- ////////////////////////////////////////////////////////////////////// -->

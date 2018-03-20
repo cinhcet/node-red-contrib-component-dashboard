@@ -1,0 +1,45 @@
+<script type="text/javascript">
+  RED.nodes.registerType('yad-paper-button', {
+    category: 'Component Dashboard',
+    color: '#a6bbcf',
+    defaults: {
+      yad: {
+        value: "",
+        required: true,
+        type: "yad-configuration"
+      },
+      elementID: {
+        value: "",
+        required: true
+      },
+      name: {
+        value: ""
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "bridge-dash.png",
+    label: function() {
+      return this.name || "YAD Paper Button";
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="yad-paper-button">
+  <div class="form-row">
+    <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
+    <input type="text" id="node-input-yad">
+  </div>
+  <div class="form-row">
+    <label for="node-input-elementID"><i class="icon-tag"></i> Element ID</label>
+    <input type="text" id="node-input-elementID" placeholder="Element ID">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="yad-paper-button">
+  <p>Paper button</p>
+</script>
