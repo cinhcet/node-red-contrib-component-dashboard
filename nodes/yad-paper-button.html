@@ -1,7 +1,7 @@
 <script type="text/javascript">
   RED.nodes.registerType('yad-paper-button', {
     category: 'Component Dashboard',
-    color: '#a6bbcf',
+    color: '#2196F3',
     defaults: {
       yad: {
         value: "",
@@ -18,9 +18,9 @@
     },
     inputs: 1,
     outputs: 1,
-    icon: "bridge-dash.png",
+    icon: "hash.png",
     label: function() {
-      return this.name || "YAD Paper Button";
+      return this.name || this.elementID;
     }
   });
 </script>
@@ -41,5 +41,5 @@
 </script>
 
 <script type="text/x-red" data-help-name="yad-paper-button">
-  <p>Paper button</p>
+  <p>Paper button with id elementID</p>
 </script>

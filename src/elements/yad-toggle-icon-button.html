@@ -1,0 +1,57 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+
+<dom-module id="yad-toggle-icon-button">
+  <template>
+    <style>
+    </style>
+    <paper-icon-button icon="[[icon]]" on-click="press"></paper-icon-button>
+  </template>
+
+  <script>
+    class YadToggleIconButton extends Polymer.Element {
+      static get is() { return 'yad-toggle-icon-button'; }
+      static get properties() {
+        return {
+          icon: {
+            type: String,
+            computed: 'computeState(state)'
+          },
+          iconOn: {
+            type: String,
+            value: 'av:play-arrow'
+          },
+          iconOff: {
+            type: String,
+            value: 'av:pause'
+          },
+          state: {
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+      computeState(state) {
+        if(state) {
+          return this.iconOn;
+        } else {
+          return this.iconOff;
+        }
+      }
+      nodeRedMsg(msg) {
+        if(msg.payload === true) {
+          this.state = true;
+        } else if(msg.payload === false) {
+          this.state = false;
+        }
+      }
+      press() {
+        sendMessageToNR(this.id, {payload: !this.state});
+      }
+    }
+    window.customElements.define(YadToggleIconButton.is, YadToggleIconButton);
+  </script>
+</dom-module>

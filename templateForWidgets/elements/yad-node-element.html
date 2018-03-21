@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="yad-node-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>[[prop1]]</div>
+    <button on-click="press">Click Me</button>
+  </template>
+
+  <script>
+    class YadNodeElement extends Polymer.Element {
+      static get is() { return 'yad-node-element'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'Test'
+          }
+        };
+      }
+      nodeRedMsg(msg) {
+        this.prop1 = msg.payload;
+      }
+      press() {
+        sendMessageToNR(this.id, {payload: 'message!'});
+      }
+    }
+    window.customElements.define(YadNodeElement.is, YadNodeElement);
+  </script>
+</dom-module>
