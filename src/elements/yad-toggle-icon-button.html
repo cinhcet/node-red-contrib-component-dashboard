@@ -8,7 +8,7 @@
   <template>
     <style>
     </style>
-    <paper-icon-button icon="[[icon]]" on-click="press"></paper-icon-button>
+    <paper-icon-button icon="[[icon]]" style="color:[[iconColor]];" on-click="press"></paper-icon-button>
   </template>
 
   <script>
@@ -18,7 +18,7 @@
         return {
           icon: {
             type: String,
-            computed: 'computeState(state)'
+            computed: 'computeIcon(state)'
           },
           iconOn: {
             type: String,
@@ -27,6 +27,18 @@
           iconOff: {
             type: String,
             value: 'av:pause'
+          },
+          iconColor: {
+            type: String,
+            computed: 'computeColor(state)'
+          },
+          iconColorOn: {
+            type: String,
+            value: 'black'
+          },
+          iconColorOff: {
+            type: String,
+            value: 'black'
           },
           state: {
             type: Boolean,
@@ -37,11 +49,18 @@
       constructor() {
         super();
       }
-      computeState(state) {
+      computeIcon(state) {
         if(state) {
           return this.iconOn;
         } else {
           return this.iconOff;
+        }
+      }
+      computeColor(state) {
+        if(state) {
+          return this.iconColorOn;
+        } else {
+          return this.iconColorOff;
         }
       }
       nodeRedMsg(msg) {

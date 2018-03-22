@@ -1,0 +1,55 @@
+<link rel="import" href="yad-base-element.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="yad-text-element">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      paper-card {
+        width: 288px;
+        margin:3px;
+      }
+      .label {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        color: var(--paper-indigo-500);
+      }
+    </style>
+    <paper-card>
+      <div class="card-content">
+        <div class="layout horizontal justified">
+          <div class="label">
+            <slot></slot>
+          </div>
+          <div>[[text]]</div>
+        </div>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    class YadTextElement extends YadBaseElement {
+      static get is() {
+        return 'yad-text-element';
+      }
+      static get properties() {
+        return {
+          text: {
+            type: String,
+            value: ''
+          }
+        };
+      }
+      constructor() {
+        super();
+      }
+      nodeRedMsg(msg) {
+        this.text = msg.payload;
+      }
+    }
+    window.customElements.define(YadTextElement.is, YadTextElement);
+  </script>
+</dom-module>
