@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="yad-base-element.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -12,7 +12,7 @@
   </template>
 
   <script>
-    class YadToggleIconButton extends Polymer.Element {
+    class YadToggleIconButton extends YadBaseElement {
       static get is() { return 'yad-toggle-icon-button'; }
       static get properties() {
         return {
@@ -34,6 +34,9 @@
           }
         };
       }
+      constructor() {
+        super();
+      }
       computeState(state) {
         if(state) {
           return this.iconOn;
@@ -49,7 +52,7 @@
         }
       }
       press() {
-        sendMessageToNR(this.id, {payload: !this.state});
+        this._sendToNR({payload: !this.state});
       }
     }
     window.customElements.define(YadToggleIconButton.is, YadToggleIconButton);

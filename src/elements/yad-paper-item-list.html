@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="yad-base-element.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-item/paper-item-body.html">
@@ -15,7 +15,7 @@
   </template>
 
   <script>
-    class YadPaperItemList extends Polymer.Element {
+    class YadPaperItemList extends YadBaseElement {
       static get is() { return 'yad-paper-item-list'; }
       static get properties() {
         return {
@@ -28,6 +28,9 @@
             }
           }
         };
+      }
+      constructor() {
+        super();
       }
       nodeRedMsg(msg) {
         this.listItems = msg.payload;

@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="yad-base-element.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -8,11 +8,11 @@
   <template>
     <style>
     </style>
-    <paper-icon-button icon="[[icon]]"></paper-icon-button>
+    <paper-icon-button icon="[[icon]]" on-click="press"></paper-icon-button>
   </template>
 
   <script>
-    class YadPaperIconButton extends Polymer.Element {
+    class YadPaperIconButton extends YadBaseElement {
       static get is() { return 'yad-paper-icon-button'; }
       static get properties() {
         return {
@@ -22,9 +22,12 @@
           }
         };
       }
+      constructor() {
+        super();
+      }
       nodeRedMsg(msg) {}
       press() {
-        sendMessageToNR(this.id, {payload: true});
+        this._sendToNR({payload:true});
       }
     }
     window.customElements.define(YadPaperIconButton.is, YadPaperIconButton);

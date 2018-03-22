@@ -1,0 +1,25 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="yad-base-element">
+  <script>
+    class YadBaseElement extends Polymer.Element {
+      static get is() { return 'yad-base-element'; }
+      static get properties() {
+        return {
+          noMsg: {
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+      _sendToNR(msg) {
+        if(!this.noMsg) {
+          sendMessageToNR(this.id, msg);
+        } else {
+          this.dispatchEvent(new CustomEvent('element-event', msg));
+        }
+      }
+    }
+    window.customElements.define(YadBaseElement.is, YadBaseElement);
+  </script>
+</dom-module>

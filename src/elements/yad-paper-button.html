@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="yad-base-element.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 
@@ -23,14 +23,20 @@
   </template>
 
   <script>
-    class YadPaperButtonElement extends Polymer.Element {
+    class YadPaperButtonElement extends YadBaseElement {
       static get is() { return 'yad-paper-button'; }
       static get properties() {
         return {};
       }
+      constructor() {
+        super();
+      }
+
       nodeRedMsg(msg) {}
+
       press() {
-        sendMessageToNR(this.id, {payload: true});
+        var msg = {payload: true};
+        this._sendToNR(msg);
       }
     }
     window.customElements.define(YadPaperButtonElement.is, YadPaperButtonElement);

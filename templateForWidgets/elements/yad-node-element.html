@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="yad-base-element.html">
 
 <dom-module id="yad-node-element">
   <template>
@@ -12,7 +12,7 @@
   </template>
 
   <script>
-    class YadNodeElement extends Polymer.Element {
+    class YadNodeElement extends YadBaseElement {
       static get is() { return 'yad-node-element'; }
       static get properties() {
         return {
@@ -22,11 +22,14 @@
           }
         };
       }
-      nodeRedMsg(msg) {
-        this.prop1 = msg.payload;
+      constructor() {
+        super();
       }
       press() {
-        sendMessageToNR(this.id, {payload: 'message!'});
+        this._sendToNR({payload: 'message'});
+      }
+      nodeRedMsg(msg) {
+        this.prop1 = msg.payload;
       }
     }
     window.customElements.define(YadNodeElement.is, YadNodeElement);
