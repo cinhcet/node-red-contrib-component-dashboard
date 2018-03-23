@@ -1,37 +1,64 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>src</title>
-    <meta name="description" content="src description">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="manifest.json">
+  <title>src</title>
+  <meta name="description" content="src description">
 
-    <script src="socket.io/socket.io.js"></script>
+  <!-- See https://goo.gl/OOhYW5 -->
+  <link rel="manifest" href="manifest.json">
 
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="socket.io/socket.io.js"></script>
 
-    <link rel="import" href="elements/yad-node-element.html">
-    <link rel="import" href="elements/yad-paper-button.html">
-    <link rel="import" href="elements/yad-paper-icon-button.html">
-    <link rel="import" href="elements/yad-toggle-icon-button.html">
-    <link rel="import" href="elements/yad-paper-item-list.html">
-  </head>
-  <body>
-    <yad-paper-button id="paperButton1">Press me</yad-paper-button>
-    <yad-paper-button id="paperButton2">Another Button</yad-paper-button>
-    <yad-paper-icon-button id="paperIconButton1"></yad-paper-icon-button>
-    <yad-paper-icon-button id="playButton" icon="av:play-arrow"></yad-paper-icon-button>
-    <yad-paper-icon-button id="pauseButton" icon="av:pause"></yad-paper-icon-button>
-    <yad-toggle-icon-button id="toggle1" icon-on="icons:radio-button-checked" icon-off="icons:radio-button-unchecked"></yad-toggle-icon-button>
+  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <yad-paper-item-list id="itemList1"></yad-paper-item-list>
+  <link rel="import" href="elements/yad-node-element.html">
+  <link rel="import" href="elements/yad-paper-button.html">
+  <link rel="import" href="elements/yad-paper-icon-button.html">
+  <link rel="import" href="elements/yad-toggle-icon-button.html">
+  <link rel="import" href="elements/yad-paper-item-list.html">
+  <link rel="import" href="elements/yad-music-control.html">
+  <link rel="import" href="elements/yad-text-element.html">
 
-    <script src="index.js"></script>
-  </body>
+  <link rel="import" href="elements/yad-justgage-gauge/yad-justgage-gauge.html">
+
+  <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+  <custom-style>
+    <style is="custom-style" include="iron-flex iron-flex-alignment">
+    </style>
+  </custom-style>
+
+</head>
+
+<body>
+  <div class="layout horizontal center-justified wrap">
+    <div class="layout vertical">
+      <div>
+        <yad-music-control id="musicControl1"></yad-music-control>
+      </div>
+      <div>
+        <yad-text-element id="textWidget">Text:</yad-text-element>
+      </div>
+      <div>
+        <yad-justgage-gauge id="gauge" min-value="0" max-value="40" label="°C">Temperature</yad-justgage-gauge>
+      </div>
+    </div>
+    <div class="layout horizontal wrap">
+      <div>
+        <yad-paper-button id="paperButton1">Button</yad-paper-button>
+      </div>
+      <div>
+        <yad-paper-button id="paperButton2">Another Button</yad-paper-button>
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
 </html>
 
 <!-- <> -->

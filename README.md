@@ -15,6 +15,17 @@ This is a very early proof of concept. Everything can change all the time, do no
 ## Contributions/discussion
 If someone thinks this is interesting, I would be pleased to discuss and receive contributions. Even if you think that another route could be more sensible, let me know!
 
+# Current widgets
+The current list of (early, prototype) widgets
+* Button
+* Icon button
+* Icon toggle button
+* Text widget
+* Music control widget
+* Gauge widget
+
+![exampleDashboard](exampleDashboard.png)
+
 # Install
 Go to your node-red home-home directory (e.g. `~/.node-red`) and run
 ```
