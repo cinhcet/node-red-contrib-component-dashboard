@@ -41,10 +41,14 @@ module.exports = function(RED) {
     var socketIoPath = join(fullPath, 'socket.io');
     node.io = socketIO(server, {path: socketIoPath});
 
+    node.socketList = {};
+
     app.use(join(yadPath), serveStatic(path.join(__dirname, "src")));
     node.log("YAD started at " + fullPath);
 
     node.io.on('connection', function(socket) {
+      node.socketList[socket.id] = socket;
+
       socket.on('toNR', function(msg) {
         if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
           if(node.elementNodes.hasOwnProperty(msg.elementID)) {
@@ -52,10 +56,20 @@ module.exports = function(RED) {
           }
         }
       });
+
+      socket.on('disconnect', function() {
+        delete node.socketList[socket.id];
+      });
     });
 
-    node.io.on('connect_error', function (error) {
-      node.warn('connect_error', error);
+    node.io.on('error', function (error) {
+      node.warn('YAD socket io error', error);
+    });
+
+    node.on('close', function() {
+      Object.keys(node.socketList).forEach(function(socketID) {
+        node.socketList[socketID].disconnect();
+      });
     });
   }
 

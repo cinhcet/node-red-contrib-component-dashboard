@@ -61,7 +61,6 @@ In return, use `node.yad.sendMessage(node, m);` to send the message `m` to the u
 The basic yad-node already allows to communicate with all widgets, so creating a node for each widget is not necessary. However, this is recommended to create a node for each widget (maybe widget group) to perform validation/security checks.
 
 # TODO
-* Auto refresh and reconnect after node-red is deployed
 * Message replay to update ui when a client connects
 * Multiple pages for multiple config nodes
 * Layout widget to create a simple node-red-dashboard like ui layout
