@@ -47,7 +47,7 @@ Each node requires a config node. At the moment, just create one and use them on
 
 The dashboard can be access on the url `/yad` (e.g. http://localhost:1880/yad)
 
-Further note that at the moment you have to reload the page after each deploy of node-red, otherwise, nothing will work (this is to be fixed).
+After changing the `index.html` file, reload the page in the browser. 
 
 The power of web-components can be seen for example by using `<yad-music-control id="musicControl1"></yad-music-control>`, which will create a music control widget by just importing one single html tag.
 
