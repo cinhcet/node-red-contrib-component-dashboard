@@ -33,18 +33,29 @@ module.exports = function(RED) {
     node.elementNodes = {};
 
     var server = RED.server;
-    var app = RED.httpNode || RED.httpAdmin;
+    node.app = RED.httpNode || RED.httpAdmin;
 
-    var yadPath = 'yad';
+    node.yadPath = 'yad';
 
-    var fullPath = join(RED.settings.httpNodeRoot, yadPath);
+    var fullPath = join(RED.settings.httpNodeRoot, node.yadPath);
     var socketIoPath = join(fullPath, 'socket.io');
     node.io = socketIO(server, {path: socketIoPath});
 
     node.socketList = {};
 
-    app.use(join(yadPath), serveStatic(path.join(__dirname, "src")));
+    node.app.use(join(node.yadPath), serveStatic(path.join(__dirname, "src")));
     node.log("YAD started at " + fullPath);
+
+    node.app.get(join(node.yadPath) + '/requests', function (req, res) {
+      var msg = req.query;
+      if(msg.hasOwnProperty('id')) {
+        if(node.elementNodes.hasOwnProperty(msg.id)) {
+          if(typeof node.elementNodes[msg.id].recAjax === 'function') {
+            node.elementNodes[msg.id].recAjax(req, res);
+          }
+        }
+      }
+    });
 
     node.io.on('connection', function(socket) {
       node.socketList[socket.id] = socket;
@@ -69,6 +80,15 @@ module.exports = function(RED) {
     node.on('close', function() {
       Object.keys(node.socketList).forEach(function(socketID) {
         node.socketList[socketID].disconnect();
+      });
+
+      // TODO properly close socketIO?
+      // TODO properly close app.use serve static stuff?
+
+      node.app._router.stack.forEach(function(route,i,routes) {
+        if (route.route && route.route.path === (join(node.yadPath) + '/requests') && route.route.methods['get']) {
+          routes.splice(i,1);
+        }
       });
     });
   }

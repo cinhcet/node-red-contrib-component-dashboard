@@ -6,15 +6,52 @@
       static get is() { return 'yad-base-element'; }
       static get properties() {
         return {
+          id: {
+            type: String,
+            reflectToAttribute: true
+          },
+          elementId: {
+            type: String,
+            computed: '_computeElementID(parentId, id)'
+          },
+          parentId: {
+            type: String,
+            value: ''
+          },
           noMsg: {
             type: Boolean,
             value: false
           }
         };
       }
+
+      connectedCallback() {
+        super.connectedCallback();
+        if(!this.noMsg) {
+          if(this.id === '') {
+            console.log('Please specify an ID for that element!');
+          } else {
+            addYadElement(this);
+          }
+        }
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        removeYadElement(this);
+      }
+
+      _computeElementID(parentId, id) {
+        if(parentId === '') {
+          return id;
+        } else {
+          return parentId + '_' + id;
+        }
+      }
       _sendToNR(msg) {
         if(!this.noMsg) {
-          sendMessageToNR(this.id, msg);
+          sendMessageToNR(this.elementId, msg);
+          // TODO maybe also dispatch event in this case?
         } else {
           this.dispatchEvent(new CustomEvent('element-event', {detail: msg}));
         }

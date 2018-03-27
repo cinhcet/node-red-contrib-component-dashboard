@@ -3,6 +3,24 @@
 var socket;
 var reconnectTimer;
 
+var yadElements = {};
+
+function addYadElement(yadElement) {
+  var elementID = yadElement.elementId;
+  if(!yadElements.hasOwnProperty(elementID)) {
+    yadElements[elementID] = yadElement;
+  } else {
+    console.log('There is an element with elementID ' + elementID + ' already!');
+  }
+}
+
+function removeYadElement(yadElement) {
+  var elementID = yadElement.elementId;
+  if(yadElements.hasOwnProperty(elementID)) {
+    delete yadElements[elementID];
+  }
+}
+
 function sendMessageToNR(elementID, msg) {
   socket.emit('toNR', {elementID: elementID, msg: msg});
 }
@@ -30,7 +48,17 @@ window.addEventListener('WebComponentsReady', function (e) {
   socket.on('fromNR', function(msg) {
     msg = JSON.parse(msg);
     if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
-      document.getElementById(msg.elementID).nodeRedMsg(msg.msg);
+      var elementID = msg.elementID;
+      if(yadElements.hasOwnProperty(elementID)) {
+        var yadElement = yadElements[elementID];
+        if(typeof yadElement.nodeRedMsg === 'function') {
+          yadElement.nodeRedMsg(msg.msg);
+        }
+      } else {
+        console.log('No element with elemID ' + elementID + ' registered');
+        // TODO send message to node-red in this case!
+        // TODO general check for all ids of node-red also??!??
+      }
     }
   });
 });

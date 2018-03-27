@@ -1,0 +1,50 @@
+<link rel="import" href="../yad-base-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="yad-list-load">
+  <template>
+    <style>
+      iron-list {
+        flex: 1 1 auto;
+      }
+    </style>
+    <div>
+      <iron-list items="[[items]]" as="item">
+        <template>
+          <div>
+            [[item]]
+          </div>
+        </template>
+      </iron-list>
+    </div>
+    <iron-ajax id="ajax" auto url="{{getURL()}}" params="{{getParams()}}" handle-as="json" on-response="handleResponse"></iron-ajax>
+  </template>
+
+  <script>
+    class YadListLoad extends YadBaseElement {
+      static get is() { return 'yad-list-load'; }
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+          }
+        };
+      }
+      constructor() {
+        super();
+      }
+      getURL() {
+        return location.pathname + 'requests';
+      }
+      getParams() {
+        return {id: this.id}; //TODO this.elementId
+      }
+      handleResponse(e) {
+        this.items = e.detail.response.payload;
+      }
+      nodeRedMsg(msg) {
+      }
+    }
+    window.customElements.define(YadListLoad.is, YadListLoad);
+  </script>
+</dom-module>
