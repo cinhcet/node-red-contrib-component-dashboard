@@ -24,7 +24,7 @@ The current list of (early, prototype) widgets
 * Music control widget
 * Gauge widget
 
-![exampleDashboard](exampleDashboard.png)
+![exampleDashboard](fullExample.png)
 
 # Install
 Go to your node-red home-home directory (e.g. `~/.node-red`) and run
