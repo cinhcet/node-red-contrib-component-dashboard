@@ -9,6 +9,9 @@ module.exports = function(RED) {
 
     node.yad.initElementNode(node);
 
+    // Init message send to client when it connects
+    node.initMessageOnConnect = {payload: 'Init Value'};
+
 
     node.on('input', function(m) {
       if(m.hasOwnProperty('yadSessionID')) {
