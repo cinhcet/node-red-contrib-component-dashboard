@@ -18,7 +18,7 @@
 
 "use strict";
 
-var initialized = false;
+var AJAX_TIMEOUT = 20000;
 
 module.exports = function(RED) {
   var serveStatic = require('serve-static');
@@ -43,23 +43,47 @@ module.exports = function(RED) {
 
     node.socketList = {};
 
-    node.app.use(join(node.yadPath), serveStatic(path.join(__dirname, "src")));
+    node.staticName = 'yadStatic_' + node.yadPath;
+
+    node.app.use(join(node.yadPath), createServeStaticName(node.staticName, serveStatic(path.join(__dirname, "src"))));
     node.log("YAD started at " + fullPath);
 
     node.app.get(join(node.yadPath) + '/requests', function (req, res) {
       var msg = req.query;
-      if(msg.hasOwnProperty('id')) {
-        if(node.elementNodes.hasOwnProperty(msg.id)) {
-          if(typeof node.elementNodes[msg.id].recAjax === 'function') {
-            node.elementNodes[msg.id].recAjax(req, res);
+      if(msg.hasOwnProperty('elementId')) {
+        if(node.elementNodes.hasOwnProperty(msg.elementId)) {
+          var elementNode = node.elementNodes[msg.elementId];
+          if(typeof elementNode.recAjax === 'function') {
+            var mId = RED.util.generateId();
+            elementNode.resObjects[mId] = res;
+            elementNode.resObjectsTimeouts[mId] = setTimeout(function() {
+              delete elementNode.resObjects[mId];
+              delete elementNode.resObjectsTimeouts[mId];
+              elementNode.warn('Timeout for ajax request');
+            }, AJAX_TIMEOUT);
+            elementNode.recAjax(msg, mId);
+          } else {
+            node.warn('node does not implement recAjax prototype');
           }
+        } else {
+          node.warn('no node with elementId ' + msg.elementId);
         }
+      } else {
+        node.warn('malformed ajax request params, no elementId');
       }
     });
 
     node.io.on('connection', function(socket) {
       node.socketList[socket.id] = socket;
 
+      // Init message when a new ui client connects
+      Object.keys(node.elementNodes).forEach(function(key) {
+        var elementNode = node.elementNodes[key];
+        var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
+        socket.emit('fromNR', JSON.stringify(sendMsg));
+      });
+
+      // receive message from ui
       socket.on('toNR', function(msg) {
         if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
           if(node.elementNodes.hasOwnProperty(msg.elementID)) {
@@ -79,23 +103,26 @@ module.exports = function(RED) {
 
     node.on('close', function() {
       Object.keys(node.socketList).forEach(function(socketID) {
-        node.socketList[socketID].disconnect();
+        node.socketList[socketID].disconnect(true);
       });
-
+      //node.io.close(); //?!? This closes the express/http instance?!?
       // TODO properly close socketIO?
-      // TODO properly close app.use serve static stuff?
 
-      node.app._router.stack.forEach(function(route,i,routes) {
-        if (route.route && route.route.path === (join(node.yadPath) + '/requests') && route.route.methods['get']) {
-          routes.splice(i,1);
+      var routes = node.app._router.stack;
+      for(var i = routes.length - 1; i >= 0; i--) {
+        var route = routes[i];
+        if(route.name && route.name === node.staticName) {
+          routes.splice(i, 1);
+        } else if(route.route && route.route.path === (join(node.yadPath) + '/requests') && route.route.methods['get']) {
+          routes.splice(i, 1);
         }
-      });
+      }
     });
   }
 
   yad.prototype.sendMessage = function(elementNode, msg) {
     var node = this;
-    var sendMsg = {elementID: elementNode.elementID, msg: msg};
+    var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
     node.io.emit('fromNR', JSON.stringify(sendMsg));
   }
 
@@ -115,6 +142,34 @@ module.exports = function(RED) {
     }
   }
 
+  yad.prototype.initElementNode = function(elementNode) {
+    elementNode.elementID = elementNode.config.elementID;
+    elementNode.resObjects = {};
+    elementNode.resObjectsTimeouts = {};
+    elementNode.initMessageOnConnect = {};
+    elementNode.yad.addElementNode(elementNode);
+  }
+
+  yad.prototype.closeElementNode = function(elementNode) {
+    Object.keys(elementNode.resObjectsTimeouts).forEach(function(key) {
+      clearTimeout(elementNode.resObjectsTimeouts[key]);
+    });
+    elementNode.yad.removeElementNode(elementNode);
+  }
+
+  yad.prototype.ajaxResponse = function(mId, elementNode, message) {
+    if(elementNode.resObjects.hasOwnProperty(mId)) {
+      clearTimeout(elementNode.resObjectsTimeouts[mId]);
+      if(message !== null) {
+        elementNode.resObjects[mId].json(message);
+      } else {
+        elementNode.resObjects[mId].status(200).end();
+      }
+      delete elementNode.resObjects[mId];
+      delete elementNode.resObjectsTimeouts[mId];
+    }
+  }
+
   RED.nodes.registerType("yad-configuration", yad);
 }
 
@@ -124,4 +179,14 @@ function join() {
   var trimRegex = new RegExp('^\\/|\\/$','g'),
   paths = Array.prototype.slice.call(arguments);
   return '/' + paths.map(function(e){return e.replace(trimRegex,"");}).filter(function(e){return e;}).join('/');
+}
+
+// from http://atom0s.com/forums/viewtopic.php?t=101
+// https://stackoverflow.com/questions/5871040/how-to-dynamically-set-a-function-object-name-in-javascript-as-it-is-displayed-i/22880379#22880379
+function createServeStaticName(name, func) {
+  return(new Function(`return function(call) {
+    return function ${name} () {
+      return call(this, arguments);
+    }
+  }`)())(Function.apply.bind(func));
 }

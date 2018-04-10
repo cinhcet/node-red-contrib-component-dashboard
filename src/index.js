@@ -47,12 +47,19 @@ window.addEventListener('WebComponentsReady', function (e) {
 
   socket.on('fromNR', function(msg) {
     msg = JSON.parse(msg);
-    if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
+    if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg') && msg.hasOwnProperty('type')) {
       var elementID = msg.elementID;
       if(yadElements.hasOwnProperty(elementID)) {
         var yadElement = yadElements[elementID];
-        if(typeof yadElement.nodeRedMsg === 'function') {
-          yadElement.nodeRedMsg(msg.msg);
+        var type = msg.type;
+        if(type === 'msg') {
+          if(typeof yadElement.nodeRedMsg === 'function') {
+            yadElement.nodeRedMsg(msg.msg);
+          }
+        } else if(type === 'initMsgOC') {
+          if(typeof yadElement.nodeRedInitMsgOnConnect === 'function') {
+            yadElement.nodeRedInitMsgOnConnect(msg.msg);
+          }
         }
       } else {
         console.log('No element with elemID ' + elementID + ' registered');

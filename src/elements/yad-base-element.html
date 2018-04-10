@@ -56,6 +56,16 @@
           this.dispatchEvent(new CustomEvent('element-event', {detail: msg}));
         }
       }
+
+      // AJAX related methods
+      _getAJAXURL() {
+        return location.pathname + 'requests';
+      }
+      _getAJAXParams(params) {
+        var rMsg = {elementId: this.elementId};
+        Object.assign(rMsg, params);
+        return rMsg;
+      }
     }
     window.customElements.define(YadBaseElement.is, YadBaseElement);
   </script>
