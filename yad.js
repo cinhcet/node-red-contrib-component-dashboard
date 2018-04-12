@@ -48,7 +48,7 @@ module.exports = function(RED) {
     node.app.use(join(node.yadPath), createServeStaticName(node.staticName, serveStatic(path.join(__dirname, "src"))));
     node.log("YAD started at " + fullPath);
 
-    node.app.get(join(node.yadPath) + '/requests', function (req, res) {
+    node.app.get(join(node.yadPath) + '/requests', function(req, res) {
       var msg = req.query;
       if(msg.hasOwnProperty('elementId')) {
         if(node.elementNodes.hasOwnProperty(msg.elementId)) {
@@ -57,10 +57,12 @@ module.exports = function(RED) {
             var mId = RED.util.generateId();
             elementNode.resObjects[mId] = res;
             elementNode.resObjectsTimeouts[mId] = setTimeout(function() {
+              elementNode.resObjects[mId].status(504).end();
               delete elementNode.resObjects[mId];
               delete elementNode.resObjectsTimeouts[mId];
               elementNode.warn('Timeout for ajax request');
             }, AJAX_TIMEOUT);
+
             elementNode.recAjax(msg, mId);
           } else {
             node.warn('node does not implement recAjax prototype');
@@ -76,11 +78,21 @@ module.exports = function(RED) {
     node.io.on('connection', function(socket) {
       node.socketList[socket.id] = socket;
 
-      // Init message when a new ui client connects
       Object.keys(node.elementNodes).forEach(function(key) {
         var elementNode = node.elementNodes[key];
-        var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
-        socket.emit('fromNR', JSON.stringify(sendMsg));
+
+        // Init message when a new ui client connects
+        if(Object.keys(elementNode.initMessageOnConnect)) {
+          var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
+          socket.emit('fromNR', JSON.stringify(sendMsg));
+        }
+
+        // Replay messages
+        var sendMsg = {elementID: elementNode.elementID, type: 'replayMsg'};
+        Object.keys(elementNode.replayMessages).forEach(function(replayMsgId) {
+          sendMsg.msg = elementNode.replayMessages[replayMsgId];
+          socket.emit('fromNR', JSON.stringify(sendMsg));
+        });
       });
 
       // receive message from ui
@@ -120,10 +132,19 @@ module.exports = function(RED) {
     });
   }
 
-  yad.prototype.sendMessage = function(elementNode, msg) {
+  yad.prototype.sendMessage = function(elementNode, msg, replayMsgId) {
     var node = this;
     var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
     node.io.emit('fromNR', JSON.stringify(sendMsg));
+
+    // optional save message for replay when a new client connects
+    if(replayMsgId) {
+      if(typeof replayMsgId === 'string') {
+        elementNode.replayMessages[replayMsgId] = msg;
+      } else {
+        elementNode.warn('replayMsgId is not a string');
+      }
+    }
   }
 
   yad.prototype.addElementNode = function(elementNode) {
@@ -142,14 +163,21 @@ module.exports = function(RED) {
     }
   }
 
+  // must be called from every yad-node
   yad.prototype.initElementNode = function(elementNode) {
     elementNode.elementID = elementNode.config.elementID;
+
+    // storage for the ajax response method
     elementNode.resObjects = {};
     elementNode.resObjectsTimeouts = {};
+
     elementNode.initMessageOnConnect = {};
+    elementNode.replayMessages = {};
+
     elementNode.yad.addElementNode(elementNode);
   }
 
+  // must be called by every yad-node in its close handler
   yad.prototype.closeElementNode = function(elementNode) {
     Object.keys(elementNode.resObjectsTimeouts).forEach(function(key) {
       clearTimeout(elementNode.resObjectsTimeouts[key]);
@@ -167,6 +195,8 @@ module.exports = function(RED) {
       }
       delete elementNode.resObjects[mId];
       delete elementNode.resObjectsTimeouts[mId];
+    } else {
+      elementNode.warn('Ajax response called with non exisiting res object id');
     }
   }
 

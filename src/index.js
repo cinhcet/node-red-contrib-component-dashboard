@@ -52,7 +52,7 @@ window.addEventListener('WebComponentsReady', function (e) {
       if(yadElements.hasOwnProperty(elementID)) {
         var yadElement = yadElements[elementID];
         var type = msg.type;
-        if(type === 'msg') {
+        if(type === 'msg' || type === 'replayMsg') {
           if(typeof yadElement.nodeRedMsg === 'function') {
             yadElement.nodeRedMsg(msg.msg);
           }

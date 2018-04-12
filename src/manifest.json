@@ -1,6 +1,6 @@
 {
   "name": "yad",
   "short_name": "yad",
-  "start_url": "/",
+  "start_url": "/yad",
   "display": "standalone"
 }
