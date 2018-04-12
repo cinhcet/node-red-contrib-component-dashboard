@@ -3,18 +3,17 @@ module.exports = function(RED) {
   function yadPaperButton(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    node.yad = RED.nodes.getNode(config.yad);
+    node.config = config;
+    node.yad = RED.nodes.getNode(node.config.yad);
 
-    node.elementID = config.elementID;
-
-    node.yad.addElementNode(node);
+    node.yad.initElementNode(node);
 
     node.on('input', function(m) {
       //node.yad.sendMessage(node, m);
     });
 
     node.on('close', function() {
-      node.yad.removeElementNode(node);
+      node.yad.closeElementNode(node);
     });
   }
 
