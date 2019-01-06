@@ -1,6 +1,4 @@
 import io from 'socket.io-client';
-//import '@webcomponents/webcomponentsjs/webcomponents-loader.js';
-import 'web-animations-js/web-animations-next-lite.min.js';
 
 class YADClass {
   constructor() {

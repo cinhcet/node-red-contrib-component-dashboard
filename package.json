@@ -4,20 +4,44 @@
   "description": "dashboard",
   "keywords": [
     "node-red",
-    "dashboard"
+    "dashboard",
+    "web-components"
   ],
   "author": "cinhcet@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
     "serve-static": "^1.12.0",
     "socket.io": "^2.2.0",
+    "parcel-bundler": "^1.11.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "@polymer/app-layout": "^3.0.0",
+    "@polymer/app-route": "^3.0.0",
+    "@polymer/iron-ajax": "^3.0.0",
+    "@polymer/iron-flex-layout": "^3.0.0",
+    "@polymer/iron-icons": "^3.0.0",
+    "@polymer/iron-list": "^3.0.0",
+    "@polymer/iron-pages": "^3.0.0",
+    "@polymer/neon-animation": "^3.0.1",
+    "@polymer/paper-button": "^3.0.0",
+    "@polymer/paper-card": "^3.0.0",
+    "@polymer/paper-dialog": "^3.0.0",
+    "@polymer/paper-fab": "^3.0.0",
+    "@polymer/paper-icon-button": "^3.0.0",
+    "@polymer/paper-item": "^3.0.0",
+    "@polymer/paper-listbox": "^3.0.0",
+    "@polymer/paper-menu-button": "^3.0.0",
+    "@polymer/paper-styles": "^3.0.0",
+    "@polymer/paper-tabs": "^3.0.0",
+    "@polymer/paper-toggle-button": "^3.0.0",
+    "web-animations-js": "^2.3.1"
   },
   "node-red": {
     "nodes": {
-      "yad": "yad.js",
-      "yad-node": "nodes/yad-node.js"
+      "yad": "nodes/yad.js",
+      "yad-node": "nodes/yad-node.js",
+      "yad-paper-button": "coreWidgets/yad-paper-button/yad-paper-button-node.js",
+      "yad-toggle-icon-button": "coreWidgets/yad-toggle-icon-button/yad-toggle-icon-button-node.js"
     }
   },
   "repository": {

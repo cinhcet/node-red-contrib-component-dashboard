@@ -7,13 +7,12 @@
 
   <title>Dashboard</title>
 
-  <!-- See https://goo.gl/OOhYW5 -->
   <link rel="manifest" href="manifest.json">
 
 </head>
 
 <body>
-  <script src="./main.js"></script> <!-- must come first in the body-->
+  <script src="./main.js"></script> <!-- !!!must come first in the body!!! -->
 
 
   <yad-app-drawer-layout id="app" page-names='["home", "kitchen", "music"]'>
@@ -32,20 +31,17 @@
       </div>
       <div class="card-actions">
         <yad-paper-button id="paperButton">Test</yad-paper-button>
-        <div style="display: inline-block; background-color:blue; border-radius:50%;">
-          <yad-toggle-icon-button id="toggleTest" style="" icon-on="av:play-arrow" icon-off="av:pause" icon-color-on="green" icon-color-off="white" ></yad-toggle-icon-button>
-        </div>
+        <yad-toggle-icon-button id="toggleButton" style="" icon-on="av:play-arrow" icon-off="av:pause" icon-color-on="green" icon-color-off="black" ></yad-toggle-icon-button>
       </div>
     </paper-card>
     </div>
-
 
     <div slot="kitchen">
       This is another page
     </div>
 
     <div slot="music">
-      <yad-music-browser id="musicBrowser"></yad-music-browser>
+      Also another page.
     </div>
 
   </yad-app-drawer-layout>
