@@ -232,7 +232,7 @@ module.exports = function(RED) {
     var node = this;
     var dest = path.join(node.yadFolder, file);
     if(!fs.existsSync(dest)) {
-      fs.copyFileSync(path.join(__dirname, 'src/' + file), dest, fs.constants.COPYFILE_EXCL);
+      fs.copyFileSync(path.join(__dirname, '..', 'src/' + file), dest, fs.constants.COPYFILE_EXCL);
     }
   }
 
