@@ -10,13 +10,14 @@
   "license": "Apache-2.0",
   "dependencies": {
     "serve-static": "^1.12.0",
-    "socket.io": "^1.7.3"
+    "socket.io": "^2.2.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/polymer": "^3.0.0"
   },
   "node-red": {
     "nodes": {
       "yad": "yad.js",
-      "yad-node": "nodes/yad-node.js",
-      "yad-paper-button": "nodes/yad-paper-button.js"
+      "yad-node": "nodes/yad-node.js"
     }
   },
   "repository": {

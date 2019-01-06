@@ -5,113 +5,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-  <title>src</title>
-  <meta name="description" content="src description">
+  <title>Dashboard</title>
 
   <!-- See https://goo.gl/OOhYW5 -->
   <link rel="manifest" href="manifest.json">
 
-  <script src="socket.io/socket.io.js"></script>
-
-  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
-  <link rel="import" href="elements/yad-node-element.html">
-  <link rel="import" href="elements/yad-paper-button.html">
-  <link rel="import" href="elements/yad-paper-icon-button.html">
-  <link rel="import" href="elements/yad-toggle-icon-button.html">
-  <link rel="import" href="elements/yad-paper-item-list.html">
-  <link rel="import" href="elements/yad-music-control.html">
-  <link rel="import" href="elements/yad-text-element.html">
-
-  <link rel="import" href="elements/yad-app-drawer-layout/yad-app-drawer-layout.html">
-
-  <link rel="import" href="elements/yad-justgage-gauge/yad-justgage-gauge.html">
-
-  <link rel="import" href="elements/yad-list-load/yad-list-load.html">
-
-  <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-  <link rel="import" href="bower_components/app-layout/app-layout.html">
-  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
-  <link rel="import" href="bower_components/app-route/app-route.html">
-  <link rel="import" href="bower_components/app-route/app-location.html">
-  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
-  <link rel="import" href="bower_components/paper-item/all-imports.html">
-
-  <link rel="import" href="elements/yad-nested-element-example/yad-nested-element-example.html">
-
-  <custom-style>
-    <style is="custom-style" include="iron-flex iron-flex-alignment paper-item-shared-styles">
-      app-header {
-        background-color: #4285f4;
-        color: #fff;
-      }
-
-      paper-tabs {
-        background-color: var(--paper-blue-900);
-        color: #fff;
-      }
-    </style>
-  </custom-style>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto', 'Noto', sans-serif;
-      background-color: #eee;
-    }
-    .cards {
-      margin:3px;
-      width: 282px;
-      padding: 10px;
-    }
-  </style>
 </head>
 
 <body>
+  <script src="./main.js"></script> <!-- must come first in the body-->
 
-  <yad-app-drawer-layout id="app" page-names='["home", "kitchen", "otherPage"]'>
+
+  <yad-app-drawer-layout id="app" page-names='["home", "kitchen", "music"]'>
     <div slot="home__menu"><iron-icon icon="home"></iron-icon>Home</div>
     <div slot="kitchen__menu">Kitchen</div>
-    <div slot="otherPage__menu">Other page</div>
+    <div slot="music__menu">Music</div>
+
+    <div slot="home__headerTitle">Home</div>
+    <div slot="kitchen__headerTitle">Kitchen</div>
+    <div slot="music__headerTitle">Music</div>
 
     <div slot="home">
-      <div class="layout horizontal center-justified wrap">
-        <div class="layout vertical">
-          <div>
-            <yad-music-control id="musicControl1"></yad-music-control>
-          </div>
-          <div>
-            <yad-text-element id="textWidget">Text:</yad-text-element>
-          </div>
-          <div>
-            <paper-card class="cards layout horizontal center-justified">
-              <div>
-                <yad-paper-button id="paperButton1">Button</yad-paper-button>
-              </div>
-              <div>
-                <yad-paper-button id="paperButton2">Button</yad-paper-button>
-              </div>
-              <div>
-                <yad-paper-button id="paperButton3">Button</yad-paper-button>
-              </div>
-            </paper-card>
-          </div>
-        </div>
-        <div>
-          <yad-justgage-gauge id="gauge" min-value="0" max-value="40" label="°C">Temperature</yad-justgage-gauge>
-        </div>
-        <div>
-          <yad-justgage-gauge id="gauge2" min-value="0" max-value="100" label="%">Humidity</yad-justgage-gauge>
+      <paper-card heading="Controls">
+      <div class="card-content">
+        Text
+      </div>
+      <div class="card-actions">
+        <yad-paper-button id="paperButton">Test</yad-paper-button>
+        <div style="display: inline-block; background-color:blue; border-radius:50%;">
+          <yad-toggle-icon-button id="toggleTest" style="" icon-on="av:play-arrow" icon-off="av:pause" icon-color-on="green" icon-color-off="white" ></yad-toggle-icon-button>
         </div>
       </div>
+    </paper-card>
     </div>
-    <div slot="kitchen">B</div>
-    <div slot="otherPage">O</div>
+
+
+    <div slot="kitchen">
+      This is another page
+    </div>
+
+    <div slot="music">
+      <yad-music-browser id="musicBrowser"></yad-music-browser>
+    </div>
+
   </yad-app-drawer-layout>
 
-  <script src="index.js"></script>
 </body>
-
 </html>
 
-<!-- <> -->
+<!-- <>
+ -->

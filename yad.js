@@ -26,6 +26,8 @@ module.exports = function(RED) {
   var path = require('path');
   var fs = require('fs');
 
+  var userDirNR = RED.settings.userDir
+
   function yad(config) {
     RED.nodes.createNode(this, config);
     var node = this;
@@ -35,7 +37,15 @@ module.exports = function(RED) {
     var server = RED.server;
     node.app = RED.httpNode || RED.httpAdmin;
 
-    node.yadPath = 'yad';
+    node.yadPath = config.name;
+
+    node.yadFolder = null;
+
+    var success = node.createFolderStructure();
+    if(!success) {
+      node.error('YAD will not start because of folder creation error');
+      return;
+    }
 
     var fullPath = join(RED.settings.httpNodeRoot, node.yadPath);
     var socketIoPath = join(fullPath, 'socket.io');
@@ -45,7 +55,7 @@ module.exports = function(RED) {
 
     node.staticName = 'yadStatic_' + node.yadPath;
 
-    node.app.use(join(node.yadPath), createServeStaticName(node.staticName, serveStatic(path.join(__dirname, "src"))));
+    node.app.use(join(node.yadPath), createServeStaticName(node.staticName, serveStatic(path.join(node.yadFolder, "dist"))));
     node.log("YAD started at " + fullPath);
 
     node.app.get(join(node.yadPath) + '/requests', function(req, res) {
@@ -78,29 +88,34 @@ module.exports = function(RED) {
     node.io.on('connection', function(socket) {
       node.socketList[socket.id] = socket;
 
-      Object.keys(node.elementNodes).forEach(function(key) {
-        var elementNode = node.elementNodes[key];
-
-        // Init message when a new ui client connects
-        if(Object.keys(elementNode.initMessageOnConnect)) {
-          var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
-          socket.emit('fromNR', JSON.stringify(sendMsg));
-        }
-
-        // Replay messages
-        var sendMsg = {elementID: elementNode.elementID, type: 'replayMsg'};
-        Object.keys(elementNode.replayMessages).forEach(function(replayMsgId) {
-          sendMsg.msg = elementNode.replayMessages[replayMsgId];
-          socket.emit('fromNR', JSON.stringify(sendMsg));
-        });
-      });
-
       // receive message from ui
       socket.on('toNR', function(msg) {
         if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
           if(node.elementNodes.hasOwnProperty(msg.elementID)) {
             node.elementNodes[msg.elementID].recMessage(msg.msg);
           }
+        }
+      });
+
+      // element has been initialized in the browser
+      socket.on('elementInitToNR', function(msg) {
+        if(node.elementNodes.hasOwnProperty(msg.elementID)) {
+          var elementNode = node.elementNodes[msg.elementID];
+
+          // Init message when a new ui client connects
+          if(Object.keys(elementNode.initMessageOnConnect)) {
+            var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
+            socket.emit('fromNR', JSON.stringify(sendMsg));
+          }
+
+          // Replay messages
+          var sendMsg = {elementID: elementNode.elementID, type: 'replayMsg'};
+          Object.keys(elementNode.replayMessages).forEach(function(replayMsgId) {
+            sendMsg.msg = elementNode.replayMessages[replayMsgId];
+            socket.emit('fromNR', JSON.stringify(sendMsg));
+          });
+        } else {
+          //node.warn('There is an element with id ' + msg.elementID + ' which does not have a node');
         }
       });
 
@@ -200,9 +215,57 @@ module.exports = function(RED) {
     }
   }
 
+  yad.prototype.createManifestJSON = function() {
+    var node = this;
+    var manifest = {
+      "name": node.yadPath, // TODO make that configurable
+      "short_name": node.yadPath, // TODO make that configurable
+      "start_url": "/" + node.yadPath,
+      "display": "standalone"
+    };
+    var dest = path.join(node.yadFolder, 'manifest.json');
+    if(!fs.existsSync(dest)) {
+      fs.writeFileSync(dest, JSON.stringify(manifest, null, 2));
+    }
+  }
+
+  yad.prototype.copySrcFile = function(file) {
+    var node = this;
+    var dest = path.join(node.yadFolder, file);
+    if(!fs.existsSync(dest)) {
+      fs.copyFileSync(path.join(__dirname, 'src/' + file), dest, fs.constants.COPYFILE_EXCL);
+    }
+  }
+
+  yad.prototype.createFolderStructure = function() {
+    var node = this;
+    // TODO the following is not very nodejs like...
+    try {
+      var yadRootFolderPath = path.join(userDirNR, 'yad');
+      if(!fs.existsSync(yadRootFolderPath)) {
+        fs.mkdirSync(yadRootFolderPath);
+      }
+      var yadFolder = path.join(yadRootFolderPath, node.yadPath);
+      if(!fs.existsSync(yadFolder)) {
+        fs.mkdirSync(yadFolder);
+      }
+      node.yadFolder = yadFolder;
+      node.copySrcFile('index.html');
+      node.copySrcFile('style.css');
+      node.copySrcFile('main.js');
+      node.copySrcFile('widgets.js');
+      node.copySrcFile('bundle.js');
+      node.createManifestJSON();
+
+    } catch(e) {
+      node.error('yad error creating files', e);
+      return false;
+    }
+    return true;
+  }
+
   RED.nodes.registerType("yad-configuration", yad);
 }
-
 
 //from http://stackoverflow.com/a/28592528/3016654
 function join() {

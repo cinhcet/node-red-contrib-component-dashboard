@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Noto', sans-serif;
+  background-color: #eee;
+}
+.groups {
+  margin:3px;
+  max-width: 480px;
+  min-width: 320px;
+}
+.group-rows {
+  margin-top: 5px;
+}
+.group-cards {
+  padding-bottom: 5px;
+}
