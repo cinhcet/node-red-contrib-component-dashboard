@@ -1,0 +1,76 @@
+[
+    {
+        "id": "8a43b447.a2aa1",
+        "type": "tab",
+        "label": "YAD Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "de8569b1.c5eea",
+        "type": "yad-configuration",
+        "z": "",
+        "name": "dashboard"
+    },
+    {
+        "id": "bcbe819.97e04",
+        "type": "yad-paper-button",
+        "z": "8a43b447.a2aa1",
+        "yad": "de8569b1.c5eea",
+        "elementID": "paperButton",
+        "name": "",
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "8ecd47c9.ee7f8"
+            ]
+        ]
+    },
+    {
+        "id": "8ecd47c9.ee7f8",
+        "type": "debug",
+        "z": "8a43b447.a2aa1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 620,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b305db19.0b005",
+        "type": "yad-toggle-icon-button",
+        "z": "8a43b447.a2aa1",
+        "yad": "de8569b1.c5eea",
+        "elementID": "toggleButton",
+        "name": "",
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "8ecd47c9.ee7f8",
+                "e02dfa5d.3d0af8"
+            ]
+        ]
+    },
+    {
+        "id": "e02dfa5d.3d0af8",
+        "type": "function",
+        "z": "8a43b447.a2aa1",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 400,
+        "wires": [
+            [
+                "b305db19.0b005"
+            ]
+        ]
+    }
+]

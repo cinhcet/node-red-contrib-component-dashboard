@@ -22,6 +22,9 @@ npm install --save node-red-contrib-component-dashboard
 ```
 
 # Configuration
+TL;DR: Just import `exampleFlow.json` into Node-RED for a quick start, run `node bundle` in `userDir/yad/dashboard`, where `userDir` is your Node-RED user directory. Then open `http://127.0.0.1:1880/dashboard`
+
+Slightly longer version:
 When you create a new yad-configuration node with a specific name, lets call it `dashboard`, a new folder in your Node-RED user directory (called `userDir` here) will be created `userDir/yad/dashboard`. There you can find `index.html, style.css, widgets.js, main.js`. With these files, you create your dashboard.
 
 Everytime you changed a file in `userDir/yad/dashboard` or the first time you configured this dashboard, you need to run
