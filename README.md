@@ -5,6 +5,8 @@ It allows you to create dashboard widgets as web-components that are accompanied
 
 Building the dashboard then consists of plugging together html-tags, together with your favorite css. These widgets than automatically send and receive messages to/from Node-RED.
 
+![example](example2.png)
+
 ## Why another dashboard?
 The standard dashboard for Node-RED [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard) is very convenient. You can create nice dashboards directly from Node-RED. However, this convenience also implies less flexibility, since for example everything has to fit into the predefined grid structure, you have to use angularjs. When I started this project, it was also not possible to create new widgets for node-red-dashboard (this has recently changed).
 I needed more flexibility in creating my dashboards, for example to integrate a music browser/player into it.
