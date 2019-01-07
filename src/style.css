@@ -3,3 +3,36 @@ body {
   font-family: 'Roboto', 'Noto', sans-serif;
   background-color: #eee;
 }
+
+.yad-groups {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.yad-group-container {
+  margin:3px;
+  max-width: 480px;
+  min-width: 320px;
+  flex-grow: 1;
+}
+
+.yad-group-card {
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 2px;
+}
+
+.yad-group-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.yad-group-rows > :first-child {
+  margin-top: 0px !important;
+}
+
+.yad-group-row {
+  margin-top: 10px;
+}

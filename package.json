@@ -41,7 +41,8 @@
       "yad": "nodes/yad.js",
       "yad-node": "nodes/yad-node.js",
       "yad-paper-button": "coreWidgets/yad-paper-button/yad-paper-button-node.js",
-      "yad-toggle-icon-button": "coreWidgets/yad-toggle-icon-button/yad-toggle-icon-button-node.js"
+      "yad-toggle-icon-button": "coreWidgets/yad-toggle-icon-button/yad-toggle-icon-button-node.js",
+      "yad-text-widget": "coreWidgets/yad-text-widget/yad-text-widget-node.js"
     }
   },
   "repository": {

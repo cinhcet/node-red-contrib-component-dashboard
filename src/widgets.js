@@ -7,7 +7,9 @@ import 'node-red-contrib-component-dashboard/coreWidgets/yad-paper-button/yad-pa
 import 'node-red-contrib-component-dashboard/coreWidgets/yad-app-drawer-layout/yad-app-drawer-layout.js';
 import 'node-red-contrib-component-dashboard/coreWidgets/yad-paper-icon-button/yad-paper-icon-button.js';
 import 'node-red-contrib-component-dashboard/coreWidgets/yad-toggle-icon-button/yad-toggle-icon-button.js';
+import 'node-red-contrib-component-dashboard/coreWidgets/yad-switch/yad-switch.js';
+import 'node-red-contrib-component-dashboard/coreWidgets/yad-text-widget/yad-text-widget.js';
 
 // start with the npm module name and then locate the js file within this module
 // e.g. @polymer/paper-card is the npm module name
-import '@polymer/paper-card/paper-card.js';
+//import '@polymer/paper-card/paper-card.js';

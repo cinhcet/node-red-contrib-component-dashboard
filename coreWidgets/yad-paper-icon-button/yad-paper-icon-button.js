@@ -5,7 +5,7 @@ import '@polymer/iron-icons/av-icons.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-import YAD from 'node-red-contrib-component-dashboard/src/lib.js'
+import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
 
 class YadPaperIconButton extends PolymerElement {
   static get template() {

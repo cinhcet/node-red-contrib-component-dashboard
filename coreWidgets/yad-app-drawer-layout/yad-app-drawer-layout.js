@@ -9,7 +9,7 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-import YAD from 'node-red-contrib-component-dashboard/src/lib.js'
+import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
 
 class YadAppDrawerLayout extends PolymerElement {
   static get template() {
