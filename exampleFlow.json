@@ -1,76 +1,201 @@
 [
     {
-        "id": "8a43b447.a2aa1",
+        "id": "16f7639b.028574",
         "type": "tab",
-        "label": "YAD Dashboard",
+        "label": "Dashboard",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "de8569b1.c5eea",
-        "type": "yad-configuration",
-        "z": "",
-        "name": "dashboard"
-    },
-    {
-        "id": "bcbe819.97e04",
+        "id": "b94424ab.24366",
         "type": "yad-paper-button",
-        "z": "8a43b447.a2aa1",
-        "yad": "de8569b1.c5eea",
-        "elementID": "paperButton",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "paperButton1",
         "name": "",
-        "x": 410,
-        "y": 260,
+        "x": 460,
+        "y": 160,
         "wires": [
             [
-                "8ecd47c9.ee7f8"
+                "5c05f2a5.98bff4"
             ]
         ]
     },
     {
-        "id": "8ecd47c9.ee7f8",
+        "id": "cf287f1.0a3218",
+        "type": "yad-paper-button",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "paperButton2",
+        "name": "",
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "5c05f2a5.98bff4"
+            ]
+        ]
+    },
+    {
+        "id": "271a4579.5fa43a",
+        "type": "yad-toggle-icon-button",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "toggleButton",
+        "name": "",
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "5c05f2a5.98bff4",
+                "ff91f7d7.b00558"
+            ]
+        ]
+    },
+    {
+        "id": "ce10105.625eaf",
+        "type": "yad-text-widget",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "temperatureText",
+        "defaultText": "",
+        "name": "",
+        "x": 450,
+        "y": 640,
+        "wires": [
+            [
+                "5c05f2a5.98bff4"
+            ]
+        ]
+    },
+    {
+        "id": "5c05f2a5.98bff4",
         "type": "debug",
-        "z": "8a43b447.a2aa1",
+        "z": "16f7639b.028574",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 620,
-        "y": 260,
+        "x": 920,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "b305db19.0b005",
-        "type": "yad-toggle-icon-button",
-        "z": "8a43b447.a2aa1",
-        "yad": "de8569b1.c5eea",
-        "elementID": "toggleButton",
-        "name": "",
-        "x": 410,
-        "y": 320,
-        "wires": [
-            [
-                "8ecd47c9.ee7f8",
-                "e02dfa5d.3d0af8"
-            ]
-        ]
-    },
-    {
-        "id": "e02dfa5d.3d0af8",
+        "id": "ff91f7d7.b00558",
         "type": "function",
-        "z": "8a43b447.a2aa1",
+        "z": "16f7639b.028574",
         "name": "",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 410,
-        "y": 400,
+        "x": 450,
+        "y": 360,
         "wires": [
             [
-                "b305db19.0b005"
+                "271a4579.5fa43a"
             ]
         ]
+    },
+    {
+        "id": "4476ef1c.05208",
+        "type": "inject",
+        "z": "16f7639b.028574",
+        "name": "",
+        "topic": "",
+        "payload": "22 °C",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 250,
+        "y": 640,
+        "wires": [
+            [
+                "ce10105.625eaf"
+            ]
+        ]
+    },
+    {
+        "id": "14c97d5.5d26a83",
+        "type": "inject",
+        "z": "16f7639b.028574",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "49917107.ca3be"
+            ]
+        ]
+    },
+    {
+        "id": "49917107.ca3be",
+        "type": "yad-switch",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "switch1",
+        "name": "",
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "5c05f2a5.98bff4"
+            ]
+        ]
+    },
+    {
+        "id": "a6db8592.9cd02",
+        "type": "yad-switch",
+        "z": "16f7639b.028574",
+        "yad": "8266a19b.45123",
+        "elementID": "switch2",
+        "name": "",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "5c05f2a5.98bff4",
+                "ef2272dd.630298"
+            ]
+        ]
+    },
+    {
+        "id": "ef2272dd.630298",
+        "type": "delay",
+        "z": "16f7639b.028574",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 420,
+        "y": 560,
+        "wires": [
+            [
+                "a6db8592.9cd02"
+            ]
+        ]
+    },
+    {
+        "id": "8266a19b.45123",
+        "type": "yad-configuration",
+        "z": "",
+        "name": "dashboard"
     }
 ]

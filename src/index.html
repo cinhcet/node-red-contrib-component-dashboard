@@ -25,16 +25,45 @@
     <div slot="music__headerTitle">Music</div>
 
     <div slot="home">
-      <paper-card heading="Controls">
-      <div class="card-content">
-        Text
+      <div class="yad-groups">
+
+        <div class="yad-group-container yad-group-card">
+          <div class="yad-group-rows">
+
+            <div class="yad-group-row">
+              <yad-switch id="switch1">Lamp</yad-switch>
+            </div>
+            <div class="yad-group-row">
+              <yad-switch id="switch2" decouple>Switch with decoupled state - wait after press</yad-switch>
+            </div>
+            <div class="yad-group-row">
+              <yad-text-widget id="temperatureText">Temperature:</yad-text-widget>
+            </div>
+            <div class="yad-group-row">
+              I am just normal text
+            </div>
+
+          </div>
+        </div>
+
+        <div class="yad-group-container yad-group-card">
+          <div class="yad-group-rows">
+
+            <div class="yad-group-row">
+              <yad-paper-button id="paperButton1">Button</yad-paper-button>
+              <yad-paper-button id="paperButton2">Pres Me</yad-paper-button>
+            </div>
+            <div class="yad-group-row">
+              <yad-toggle-icon-button id="toggleButton" style="" icon-on="av:play-arrow" icon-off="av:pause" icon-color-on="green" icon-color-off="black" ></yad-toggle-icon-button>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-      <div class="card-actions">
-        <yad-paper-button id="paperButton">Test</yad-paper-button>
-        <yad-toggle-icon-button id="toggleButton" style="" icon-on="av:play-arrow" icon-off="av:pause" icon-color-on="green" icon-color-off="black" ></yad-toggle-icon-button>
-      </div>
-    </paper-card>
     </div>
+
+
 
     <div slot="kitchen">
       This is another page
