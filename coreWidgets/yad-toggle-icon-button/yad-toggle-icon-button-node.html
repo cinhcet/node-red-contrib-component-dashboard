@@ -1,6 +1,6 @@
 <script type="text/javascript">
   RED.nodes.registerType('yad-toggle-icon-button', {
-    category: 'Component Dashboard',
+    category: 'YAD Component Dashboard',
     color: '#2196F3',
     defaults: {
       yad: {
@@ -21,7 +21,8 @@
     icon: "hash.png",
     label: function() {
       return this.name || this.elementID;
-    }
+    },
+    paletteLabel: 'toggle icon button'
   });
 </script>
 

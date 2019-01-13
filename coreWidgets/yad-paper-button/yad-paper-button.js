@@ -1,5 +1,4 @@
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-styles/color.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
@@ -15,15 +14,15 @@ class YadPaperButtonElement extends PolymerElement {
         font-size: 14px;
         -webkit-font-smoothing: antialiased;
       }
-      paper-button.indigo {
-        background-color: var(--paper-indigo-500);
+      paper-button {
+        background-color: var(--yad-primary-color);
         color: white;
       }
-      paper-button.indigo:hover {
-        background-color: var(--paper-indigo-400);
+      paper-button:hover {
+        background-color: var(--yad-primary-color-hover);
       }
     </style>
-    <paper-button raised="" class="indigo" on-click="press"><slot></slot></paper-button>
+    <paper-button raised on-click="press"><slot></slot></paper-button>
     `;
   }
 

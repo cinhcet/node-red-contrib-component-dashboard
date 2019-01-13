@@ -1,6 +1,6 @@
 <script type="text/javascript">
   RED.nodes.registerType('yad-text-widget', {
-    category: 'Component Dashboard',
+    category: 'YAD Component Dashboard',
     color: '#2196F3',
     defaults: {
       yad: {
@@ -21,11 +21,12 @@
       }
     },
     inputs: 1,
-    outputs: 1,
+    outputs: 0,
     icon: "hash.png",
     label: function() {
       return this.name || this.elementID;
-    }
+    },
+    paletteLabel: 'text'
   });
 </script>
 

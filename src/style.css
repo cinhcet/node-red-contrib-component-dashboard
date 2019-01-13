@@ -4,6 +4,18 @@ body {
   background-color: #eee;
 }
 
+html {
+  --yad-primary-color: #0d47a1;
+  --yad-primary-color-hover: #1976d2;
+
+  --yad-secondary-color: #1976d2;
+
+  --yad-accent-color: #008600;
+
+  --yad-item-hover-dark: #9fa8da;
+  --yad-item-selected: #bbdefb;
+}
+
 .yad-groups {
   display: flex;
   justify-content: center;

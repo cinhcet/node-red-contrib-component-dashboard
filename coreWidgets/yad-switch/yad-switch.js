@@ -23,6 +23,11 @@ class YadSwitch extends PolymerElement {
         justify-content: space-between;
         position: relative;
       }
+      paper-toggle-button {
+        --paper-toggle-button-checked-ink-color: var(--yad-primary-color);
+        --paper-toggle-button-checked-button-color: var(--yad-primary-color);
+        --paper-toggle-button-checked-bar-color: var(--yad-primary-color);
+      }
     </style>
     <div class="container">
       <slot></slot>

@@ -3,9 +3,6 @@ import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-import '@polymer/paper-styles/color.js';
-
-
 class YadTextWidget extends PolymerElement {
   static get template() {
     return html`
@@ -19,7 +16,7 @@ class YadTextWidget extends PolymerElement {
         font-weight: bold;
         font-size: 16px;
         -webkit-font-smoothing: antialiased;
-        color: var(--paper-indigo-500);
+        color: var(--yad-text-label-color, var(--yad-primary-color));
       }
     </style>
     <div class="container">
