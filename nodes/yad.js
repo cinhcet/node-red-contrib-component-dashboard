@@ -222,7 +222,7 @@ module.exports = function(RED) {
       "start_url": "/" + node.yadPath,
       "display": "standalone"
     };
-    var dest = path.join(node.yadFolder, 'manifest.json');
+    var dest = path.join(node.yadFolder, 'manifest.webmanifest');
     if(!fs.existsSync(dest)) {
       fs.writeFileSync(dest, JSON.stringify(manifest, null, 2));
     }
