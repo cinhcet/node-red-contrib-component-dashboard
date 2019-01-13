@@ -24,9 +24,9 @@ class YadSwitch extends PolymerElement {
         position: relative;
       }
       paper-toggle-button {
-        --paper-toggle-button-checked-ink-color: var(--yad-primary-color);
-        --paper-toggle-button-checked-button-color: var(--yad-primary-color);
-        --paper-toggle-button-checked-bar-color: var(--yad-primary-color);
+        --paper-toggle-button-checked-ink-color: var(--yad-primary-color, #0d47a1);
+        --paper-toggle-button-checked-button-color: var(--yad-primary-color, #0d47a1);
+        --paper-toggle-button-checked-bar-color: var(--yad-primary-color, #0d47a1);
       }
     </style>
     <div class="container">

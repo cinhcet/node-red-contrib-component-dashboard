@@ -16,7 +16,7 @@ class YadTextWidget extends PolymerElement {
         font-weight: bold;
         font-size: 16px;
         -webkit-font-smoothing: antialiased;
-        color: var(--yad-text-label-color, var(--yad-primary-color));
+        color: var(--yad-text-label-color, var(--yad-primary-color, #0d47a1));
       }
     </style>
     <div class="container">

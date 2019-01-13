@@ -15,11 +15,11 @@ class YadPaperButtonElement extends PolymerElement {
         -webkit-font-smoothing: antialiased;
       }
       paper-button {
-        background-color: var(--yad-primary-color);
+        background-color: var(--yad-primary-color, #0d47a1);
         color: white;
       }
       paper-button:hover {
-        background-color: var(--yad-primary-color-hover);
+        background-color: var(--yad-primary-color-hover, #1976d2);
       }
     </style>
     <paper-button raised on-click="press"><slot></slot></paper-button>
