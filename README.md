@@ -16,6 +16,7 @@ Therefore, I created this dashboard, which is called node-red-contrib-component-
 
 ## Note
 This is a early proof of concept. Feedback/discussion appreciated.
+There are still many things todo and not completely final.
 
 # Installation
 Go to your Node-RED user folder (e.g. ~/.node-red) and run
