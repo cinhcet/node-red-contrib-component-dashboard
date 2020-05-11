@@ -1,0 +1,910 @@
+[
+    {
+        "id": "e0aeb5d1.821c1",
+        "type": "tab",
+        "label": "YAD",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c1ed682.e526998",
+        "type": "yad-client-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "name": "",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "6428fb15.611654"
+            ]
+        ]
+    },
+    {
+        "id": "6428fb15.611654",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 290,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b7ed40c.73713c",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "app-layout",
+        "replayLastMessage": false,
+        "topic": "",
+        "name": "",
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "f337e6ed.250798"
+            ]
+        ]
+    },
+    {
+        "id": "f337e6ed.250798",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 290,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "eba54bd.305cdb8",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "fires when dashboard is opened in browser",
+        "info": "",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "a376e647.92f748",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "fires when page of app-drawer-layout is changed",
+        "info": "",
+        "x": 200,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a81738c5.50301",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button1",
+        "replayLastMessage": false,
+        "topic": "button1",
+        "name": "",
+        "x": 80,
+        "y": 280,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "f9daa30e.503fd8",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "many buttons",
+        "info": "",
+        "x": 90,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e1f48f16.ef3f58",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button2",
+        "replayLastMessage": false,
+        "topic": "button2",
+        "name": "",
+        "x": 80,
+        "y": 320,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "e6f4f5f2.4e86c8",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button3",
+        "replayLastMessage": false,
+        "topic": "button3",
+        "name": "",
+        "x": 80,
+        "y": 360,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "8a0a4ef7.bef858",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button4",
+        "replayLastMessage": false,
+        "topic": "button4",
+        "name": "",
+        "x": 80,
+        "y": 400,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "bb0d8648.ef3c1",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button5",
+        "replayLastMessage": false,
+        "topic": "button5",
+        "name": "",
+        "x": 80,
+        "y": 440,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "b6e60037.51823",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button6",
+        "replayLastMessage": false,
+        "topic": "button6",
+        "name": "",
+        "x": 80,
+        "y": 480,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "a8adcdaa.94cd48",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "button7",
+        "replayLastMessage": false,
+        "topic": "button7",
+        "name": "",
+        "x": 80,
+        "y": 520,
+        "wires": [
+            [
+                "cdddd05e.4fac18"
+            ]
+        ]
+    },
+    {
+        "id": "cdddd05e.4fac18",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 290,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c4173158.ef0588",
+        "type": "inject",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 90,
+        "y": 580,
+        "wires": [
+            [
+                "396ca500.fc185a"
+            ]
+        ]
+    },
+    {
+        "id": "396ca500.fc185a",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "random temp",
+        "func": "msg.payload = Math.round(Math.random()*50.0) + ' °C';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250,
+        "y": 580,
+        "wires": [
+            [
+                "ecea342c.3898f8",
+                "62cc1814.3b971"
+            ]
+        ]
+    },
+    {
+        "id": "ecea342c.3898f8",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "text1",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 430,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62cc1814.3b971",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "text2",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 430,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94d8f2a7.91a8",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "show text",
+        "info": "",
+        "x": 420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a476d1d.e5e233",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "gauges",
+        "info": "",
+        "x": 910,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "b2f1828d.af9c88",
+        "type": "inject",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "8",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "38cde714.e21fb",
+                "743ba0fd.c2ba8"
+            ]
+        ]
+    },
+    {
+        "id": "38cde714.e21fb",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "random temp",
+        "func": "msg.payload = Math.round(Math.random()*50.0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "a0524901.85571"
+            ]
+        ]
+    },
+    {
+        "id": "743ba0fd.c2ba8",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "random humidity",
+        "func": "msg.payload = Math.round(Math.random()*100.0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 120,
+        "wires": [
+            [
+                "46cd1ce5.e364cc"
+            ]
+        ]
+    },
+    {
+        "id": "a0524901.85571",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "gaugeTemp",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 890,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46cd1ce5.e364cc",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "gaugeHum",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 890,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46001b9d.c8ecac",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_1_switch",
+        "replay": true,
+        "decoupled": true,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "ce6e9bea.db66a8"
+            ]
+        ]
+    },
+    {
+        "id": "654e41cd.4acac8",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "lightStatusAll",
+        "replay": true,
+        "decoupled": true,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 970,
+        "y": 220,
+        "wires": [
+            [
+                "ce6e9bea.db66a8",
+                "97ffacc5.a3895",
+                "49e73a29.0832ac"
+            ]
+        ]
+    },
+    {
+        "id": "ce6e9bea.db66a8",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "func": "msg.topic = 'light_1';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 340,
+        "wires": [
+            [
+                "46001b9d.c8ecac",
+                "c1d26670.35514",
+                "65674df4.0fc39c"
+            ]
+        ]
+    },
+    {
+        "id": "61bcb793.913158",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_2_switch",
+        "replay": true,
+        "decoupled": true,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 680,
+        "y": 400,
+        "wires": [
+            [
+                "97ffacc5.a3895"
+            ]
+        ]
+    },
+    {
+        "id": "97ffacc5.a3895",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "func": "msg.topic = 'light_2';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 400,
+        "wires": [
+            [
+                "61bcb793.913158",
+                "c1d26670.35514",
+                "5b04c55b.1563f4"
+            ]
+        ]
+    },
+    {
+        "id": "3dd2fd75.926ad2",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_3_switch",
+        "replay": true,
+        "decoupled": true,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 680,
+        "y": 460,
+        "wires": [
+            [
+                "49e73a29.0832ac"
+            ]
+        ]
+    },
+    {
+        "id": "49e73a29.0832ac",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "func": "msg.topic = 'light_3';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 460,
+        "wires": [
+            [
+                "3dd2fd75.926ad2",
+                "c1d26670.35514",
+                "f3ad01bd.7e7ce"
+            ]
+        ]
+    },
+    {
+        "id": "c1d26670.35514",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "func": "var stateSave = context.get('stateSave') || new Map();\nstateSave.set(msg.topic, msg.payload);\ncontext.set('stateSave', stateSave);\n\nvar state = false;\nstateSave.forEach(function(value) {\n    if(value) state = true;\n});\n\nreturn {payload: state};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 220,
+        "wires": [
+            [
+                "654e41cd.4acac8"
+            ]
+        ]
+    },
+    {
+        "id": "65674df4.0fc39c",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_1_status",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 1140,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b04c55b.1563f4",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_2_status",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 1140,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3ad01bd.7e7ce",
+        "type": "yad-node",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "light_3_status",
+        "replayLastMessage": true,
+        "topic": "",
+        "name": "",
+        "x": 1140,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f2e50032.2a33e8",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "Light control with switches, status indicators and an all off switch (press light bulb on upper right corner)",
+        "info": "The function nodes in the middle \"simulate\" a device",
+        "x": 890,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b3d197fa.9fb8d8",
+        "type": "yad-slider",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "slider3",
+        "replay": true,
+        "sendBackOnlyAfterEnd": false,
+        "topic": "",
+        "name": "",
+        "x": 930,
+        "y": 700,
+        "wires": [
+            [
+                "e81ceb99.f37ec",
+                "e4ecbc5f.70e0e"
+            ]
+        ]
+    },
+    {
+        "id": "e81ceb99.f37ec",
+        "type": "yad-slider",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "slider4",
+        "replay": true,
+        "sendBackOnlyAfterEnd": true,
+        "topic": "",
+        "name": "",
+        "x": 930,
+        "y": 760,
+        "wires": [
+            [
+                "b3d197fa.9fb8d8",
+                "e4ecbc5f.70e0e",
+                "938e3bb5.096648"
+            ]
+        ]
+    },
+    {
+        "id": "e4ecbc5f.70e0e",
+        "type": "yad-slider",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "slider5",
+        "replay": true,
+        "sendBackOnlyAfterEnd": false,
+        "topic": "",
+        "name": "",
+        "x": 930,
+        "y": 820,
+        "wires": [
+            [
+                "e81ceb99.f37ec",
+                "b3d197fa.9fb8d8",
+                "f016597d.33a6b"
+            ]
+        ]
+    },
+    {
+        "id": "2698c0b0.5b4b08",
+        "type": "yad-slider",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "slider2",
+        "replay": true,
+        "sendBackOnlyAfterEnd": false,
+        "topic": "",
+        "name": "",
+        "x": 930,
+        "y": 640,
+        "wires": [
+            [
+                "a934e163.1358e"
+            ]
+        ]
+    },
+    {
+        "id": "3e49ca35.04b7b6",
+        "type": "yad-slider",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "slider1",
+        "replay": true,
+        "sendBackOnlyAfterEnd": false,
+        "topic": "",
+        "name": "",
+        "x": 930,
+        "y": 600,
+        "wires": [
+            [
+                "a934e163.1358e"
+            ]
+        ]
+    },
+    {
+        "id": "f016597d.33a6b",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1130,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "938e3bb5.096648",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1130,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "a934e163.1358e",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1130,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6c23c16c.93a84",
+        "type": "function",
+        "z": "e0aeb5d1.821c1",
+        "name": "random",
+        "func": "msg.payload = Math.round(Math.random()*200.0-100.0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 640,
+        "wires": [
+            [
+                "2698c0b0.5b4b08"
+            ]
+        ]
+    },
+    {
+        "id": "733c215e.552418",
+        "type": "inject",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 730,
+        "y": 600,
+        "wires": [
+            [
+                "6c23c16c.93a84"
+            ]
+        ]
+    },
+    {
+        "id": "b620c9db.5bd8d8",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "sliders",
+        "info": "",
+        "x": 930,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "83a72c78.6348",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "open a second dashboard to see the difference of this slider",
+        "info": "",
+        "x": 620,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "87fbad1a.f2d96",
+        "type": "comment",
+        "z": "e0aeb5d1.821c1",
+        "name": "send to Node-RED only after slide has ended",
+        "info": "",
+        "x": 670,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "ea083ac.5732348",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "toggle1",
+        "replay": true,
+        "decoupled": false,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 100,
+        "y": 680,
+        "wires": [
+            [
+                "55f31b5.f260264"
+            ]
+        ]
+    },
+    {
+        "id": "59773ba1.72fd04",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "toggle2",
+        "replay": true,
+        "decoupled": false,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 100,
+        "y": 720,
+        "wires": [
+            [
+                "55f31b5.f260264",
+                "c6389d5d.170b3"
+            ]
+        ]
+    },
+    {
+        "id": "c6389d5d.170b3",
+        "type": "yad-switch",
+        "z": "e0aeb5d1.821c1",
+        "yad": "7251761.59f7908",
+        "elementID": "toggle3",
+        "replay": true,
+        "decoupled": false,
+        "onValue": "true",
+        "onValueType": "bool",
+        "offValue": "false",
+        "offValueType": "bool",
+        "topic": "",
+        "name": "",
+        "x": 100,
+        "y": 760,
+        "wires": [
+            [
+                "55f31b5.f260264"
+            ]
+        ]
+    },
+    {
+        "id": "55f31b5.f260264",
+        "type": "debug",
+        "z": "e0aeb5d1.821c1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 310,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "7251761.59f7908",
+        "type": "yad-configuration",
+        "z": "",
+        "name": "yad"
+    }
+]
