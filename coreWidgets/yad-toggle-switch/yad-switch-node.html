@@ -1,0 +1,115 @@
+<!--
+  Copyright (c) 2020 cinhcet
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/javascript">
+  RED.nodes.registerType('yad-switch', {
+    category: 'YAD Component Dashboard',
+    color: '#2196F3',
+    defaults: {
+      yad: {
+        value: "",
+        required: true,
+        type: "yad-configuration"
+      },
+      elementID: {
+        value: "",
+        required: true
+      },
+      replay: {
+        value: true
+      },
+      decoupled: {
+        value: false
+      },
+      onValue: {
+        value: true, 
+        required: true, 
+        validate: RED.validators.typedInput('onValueType')
+      },
+      onValueType: {value: 'bool'},
+      offValue: {
+        value: false,
+        required: true,
+        validate: RED.validators.typedInput('offValueType')
+      },
+      offValueType: {value: 'bool'}, 
+      topic: {value: ''},     
+      name: {
+        value: ""
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "hash.png",
+    label: function() {
+      return this.name || this.elementID;
+    },
+    paletteLabel: 'switch',
+    oneditprepare: function() {
+      $('#node-input-onValue').typedInput({
+        default: 'bool',
+        typeField: $("#node-input-onValueType"),
+        types: ['bool','str','num','json','bin']
+      });
+      $('#node-input-offValue').typedInput({
+        default: 'bool',
+        typeField: $("#node-input-offValueType"),
+        types: ['bool','str','num','json','bin']
+      });
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="yad-switch">
+  <div class="form-row">
+    <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
+    <input type="text" id="node-input-yad">
+  </div>
+  <div class="form-row">
+    <label for="node-input-elementID"><i class="icon-tag"></i> Element ID</label>
+    <input type="text" id="node-input-elementID" placeholder="Element ID">
+  </div>
+  <div class="form-row">
+    <label for="node-input-replay" style="width:auto">Replay state when ui is opened</label>
+    <input type="checkbox" id="node-input-replay" style="display:inline-block; width:auto; vertical-align:top;">
+  </div>
+  <div class="form-row">
+    <label for="node-input-decoupled" style="width:auto">Decouple switch state</label>
+    <input type="checkbox" id="node-input-decoupled" style="display:inline-block; width:auto; vertical-align:top;">
+  </div>
+  <div class="form-row">
+    <label for="node-input-onValue">On Payload</label>
+    <input type="text" id="node-input-onValue" style="width:70%">
+    <input type="hidden" id="node-input-onValueType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-offValue">Off Payload</label>
+    <input type="text" id="node-input-offValue" style="width:70%">
+    <input type="hidden" id="node-input-offValueType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-topic">Topic</label>
+    <input type="text" id="node-input-topic" placeholder="Topic">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="yad-switch">
+  <p>Switch node for yad</p>
+</script>

@@ -15,24 +15,37 @@
  **/
 
 import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
+import 'node-red-contrib-component-dashboard/coreWidgets/yad-ripple/yad-ripple.js';
 
 const template = document.createElement('template');
 template.innerHTML = /*html*/`
   <style>
     :host {
-      display: flex;
-      justify-content: space-between;
+      display: inline-block;
+      vertical-align: middle;
+      box-sizing: border-box;
+      width: 100%;
+      position: relative;
+      background-color: var(--yad-primary-color);
+      color: var(--yad-primary-ontext-color);
+      text-align: center;
+      text-decoration: none;
+      padding: 5px 15px;
+      cursor: pointer;
+      border-radius: 3px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .label {
-      font-weight: bold;
-      color: var(--yad-primary-color, #0d47a1);
-      margin-right: 5px;
-    }
-  </style>
-  <slot class="label"></slot>
-  <div id="text"></div>
-`;
 
+    :host(:hover) {
+      background-color: var(--yad-primary-color-light);
+    }
+
+  </style>
+  <yad-ripple self-click></yad-ripple>
+  <slot></slot>
+`;
 
 class Component extends HTMLElement {
   
@@ -41,6 +54,7 @@ class Component extends HTMLElement {
     YAD.initYadElement(this);
     this.attachShadow({mode: 'open'});
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.addEventListener('click', this.press.bind(this));
   }
 
   connectedCallback() {
@@ -51,11 +65,9 @@ class Component extends HTMLElement {
     this._disconnectedCallbackHelper();
   }
 
-  nodeRedMsg(msg) {
-    if(msg.hasOwnProperty('payload')) {
-      this.shadowRoot.getElementById('text').innerHTML = msg.payload;
-    }
+  press() {
+    this._sendToNR({payload: true});
   }
 }
 
-window.customElements.define('yad-text-widget', Component);
+window.customElements.define('yad-button', Component);

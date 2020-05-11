@@ -15,7 +15,7 @@
 -->
 
 <script type="text/javascript">
-  RED.nodes.registerType('yad-node', {
+  RED.nodes.registerType('yad-slider', {
     category: 'YAD Component Dashboard',
     color: '#2196F3',
     defaults: {
@@ -28,27 +28,30 @@
         value: "",
         required: true
       },
-      replayLastMessage: {
+      replay: {
+        value: true
+      },
+      sendBackOnlyAfterEnd: {
         value: false
       },
       topic: {
         value: ""
-      },
+      },    
       name: {
         value: ""
-      },
+      }
     },
     inputs: 1,
     outputs: 1,
     icon: "hash.png",
     label: function() {
       return this.name || this.elementID;
-    }, 
-    paletteLabel: 'universal node'
+    },
+    paletteLabel: 'slider'
   });
 </script>
 
-<script type="text/x-red" data-template-name="yad-node">
+<script type="text/x-red" data-template-name="yad-slider">
   <div class="form-row">
     <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
     <input type="text" id="node-input-yad">
@@ -58,8 +61,12 @@
     <input type="text" id="node-input-elementID" placeholder="Element ID">
   </div>
   <div class="form-row">
-    <label for="node-input-replay" style="width:auto">Replay last message when ui is opened</label>
-    <input type="checkbox" id="node-input-replayLastMessage" style="display:inline-block; width:auto; vertical-align:top;">
+    <label for="node-input-replay" style="width:auto">Replay state when ui is opened</label>
+    <input type="checkbox" id="node-input-replay" style="display:inline-block; width:auto; vertical-align:top;">
+  </div>
+  <div class="form-row">
+    <label for="node-input-sendBackOnlyAfterEnd" style="width:auto">Send state back to ui only after slide has ended</label>
+    <input type="checkbox" id="node-input-sendBackOnlyAfterEnd" style="display:inline-block; width:auto; vertical-align:top;">
   </div>
   <div class="form-row">
     <label for="node-input-topic">Topic</label>
@@ -71,7 +78,6 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="yad-node">
-  <p>Send/receive message to/from element with id elementID</p>
-  <p>If replay is checked, then the last message will automatically be saved and replayed</p>
+<script type="text/x-red" data-help-name="yad-slider">
+  <p>Slider node for yad</p>
 </script>

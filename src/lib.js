@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2020 cinhcet
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
 import io from 'socket.io-client';
 
 class YADClass {
@@ -57,10 +73,10 @@ class YADClass {
     this.socket.on('fromNR', function(msg) {
       msg = JSON.parse(msg);
       if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg') && msg.hasOwnProperty('type')) {
-        var elementID = msg.elementID;
+        let elementID = msg.elementID;
         if(self.yadElements.hasOwnProperty(elementID)) {
-          var yadElement = self.yadElements[elementID];
-          var type = msg.type;
+          let yadElement = self.yadElements[elementID];
+          let type = msg.type;
           if(type === 'msg' || type === 'replayMsg') {
             if(typeof yadElement.nodeRedMsg === 'function') {
               yadElement.nodeRedMsg(msg.msg);
@@ -81,14 +97,13 @@ class YADClass {
 
   initYadElement(yadElement) {
     var self = this;
-    Object.defineProperty(yadElement, 'id', {
-      get: function () {
-        return yadElement.getAttribute('id');
-      }
-    });
     Object.defineProperty(yadElement, 'elementId', {
       get: function () {
-        return yadElement._computeElementID(yadElement.parentId, yadElement.id)
+        if(yadElement.parentId === '') {
+          return yadElement.id;
+        } else {
+          return yadElement.parentId + '_' + yadElement.id;
+        }
       }
     });
     Object.defineProperty(yadElement, 'parentId', {
@@ -109,14 +124,7 @@ class YADClass {
         }
       }
     });
-
-    yadElement._computeElementID = function(parentId, id) {
-      if(parentId === '') {
-        return id;
-      } else {
-        return parentId + '_' + id;
-      }
-    }
+ 
     yadElement._sendToNR = function(msg) {
       if(!yadElement.noMsg) {
         self.sendMessageToNR(yadElement.elementId, msg);
@@ -124,16 +132,6 @@ class YADClass {
       } else {
         yadElement.dispatchEvent(new CustomEvent('element-event', {detail: msg}));
       }
-    }
-
-    // AJAX related methods
-    yadElement._getAJAXURL = function() {
-      return location.pathname + 'requests';
-    }
-    yadElement._getAJAXParams = function(params) {
-      var rMsg = {elementId: yadElement.elementId};
-      Object.assign(rMsg, params);
-      return rMsg;
     }
 
     yadElement._connectedCallbackHelper = function() {
@@ -150,7 +148,25 @@ class YADClass {
       self.removeYadElement(yadElement);
     }
   }
+
+
+  // AJAX related methods
+  ajaxCall(yadElement, params, callback) {
+    var s = location.pathname + 'requests?elementId=' + encodeURIComponent(yadElement.elementId);
+    Object.keys(params).forEach(function(key) {
+      s += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+    });
+    fetch(s)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if(callback) callback(data);
+      });
+  }
+
 }
 
 var YAD = new YADClass();
+window.YAD = YAD;
 export default YAD;

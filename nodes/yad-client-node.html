@@ -15,7 +15,7 @@
 -->
 
 <script type="text/javascript">
-  RED.nodes.registerType('yad-node', {
+  RED.nodes.registerType('yad-client-node', {
     category: 'YAD Component Dashboard',
     color: '#2196F3',
     defaults: {
@@ -24,46 +24,24 @@
         required: true,
         type: "yad-configuration"
       },
-      elementID: {
-        value: "",
-        required: true
-      },
-      replayLastMessage: {
-        value: false
-      },
-      topic: {
-        value: ""
-      },
       name: {
         value: ""
-      },
+      }
     },
-    inputs: 1,
+    inputs: 0,
     outputs: 1,
     icon: "hash.png",
     label: function() {
-      return this.name || this.elementID;
-    }, 
-    paletteLabel: 'universal node'
+      return this.name || "ui client connect";
+    },
+    paletteLabel: 'client node'
   });
 </script>
 
-<script type="text/x-red" data-template-name="yad-node">
+<script type="text/x-red" data-template-name="yad-client-node">
   <div class="form-row">
     <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
     <input type="text" id="node-input-yad">
-  </div>
-  <div class="form-row">
-    <label for="node-input-elementID"><i class="icon-tag"></i> Element ID</label>
-    <input type="text" id="node-input-elementID" placeholder="Element ID">
-  </div>
-  <div class="form-row">
-    <label for="node-input-replay" style="width:auto">Replay last message when ui is opened</label>
-    <input type="checkbox" id="node-input-replayLastMessage" style="display:inline-block; width:auto; vertical-align:top;">
-  </div>
-  <div class="form-row">
-    <label for="node-input-topic">Topic</label>
-    <input type="text" id="node-input-topic" placeholder="Topic">
   </div>
   <div class="form-row">
     <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -71,7 +49,6 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="yad-node">
-  <p>Send/receive message to/from element with id elementID</p>
-  <p>If replay is checked, then the last message will automatically be saved and replayed</p>
+<script type="text/x-red" data-help-name="yad-client-node">
+  <p>Emits message if new ui client connects</p>
 </script>

@@ -26,18 +26,12 @@ module.exports = function(RED) {
     node.yad.initElementNode(node);
 
     node.on('input', function(m, send, done) {
-      if(m.hasOwnProperty('yadSessionID')) {
-        node.yad.ajaxResponse(m.yadSessionID, node, {payload: m.payload});
+      if(node.config.replay === true) {
+        node.yad.sendMessage(node, m, 'state');
       } else {
-        if(m.hasOwnProperty('replay') && m.replay === true && m.hasOwnProperty('topic')) {
-          node.yad.sendMessage(node, m, m.topic);
-        } else if(node.config.replayLastMessage === true) {
-          node.yad.sendMessage(node, m, '_lastMessageReplay');
-        } else {
-          node.yad.sendMessage(node, m);
-        }
+        node.yad.sendMessage(node, m);
       }
-      
+
       if(done) {
         done();
       }
@@ -50,14 +44,16 @@ module.exports = function(RED) {
 
   yadNode.prototype.recMessage = function(m) {
     var node = this;
+    if(!node.config.sendBackOnlyAfterEnd || (node.config.sendBackOnlyAfterEnd && m.finished === true) ) {
+      if(node.config.replay === true) {
+        node.yad.sendMessage(node, {payload: m.payload}, 'state');
+      } else {
+        node.yad.sendMessage(node, {payload: m.payload});
+      }
+    }
     if(node.config.topic !== '') m.topic = node.config.topic;
     node.send(m);
   }
 
-  yadNode.prototype.recAjax = function(params, mId) {
-    var node = this;
-    node.send({payload: 'ajaxRequest', params: params, yadSessionID: mId});
-  }
-
-  RED.nodes.registerType("yad-node", yadNode);
+  RED.nodes.registerType("yad-slider", yadNode);
 }

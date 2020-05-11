@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 cinhcet@gmail.com
+ * Copyright (c) 2020 cinhcet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,14 @@
 
 var AJAX_TIMEOUT = 20000;
 
+var socketIOInstances = new Map();
+
 module.exports = function(RED) {
   var serveStatic = require('serve-static');
   var socketIO = require('socket.io');
   var path = require('path');
   var fs = require('fs');
+  var Events = require('events');
 
   var userDirNR = RED.settings.userDir
 
@@ -32,6 +35,8 @@ module.exports = function(RED) {
     var node = this;
 
     node.elementNodes = {};
+    node.eventEmitter = new Events.EventEmitter();
+    node.eventEmitter.setMaxListeners(0);
 
     var server = RED.server;
     node.app = RED.httpNode || RED.httpAdmin;
@@ -48,7 +53,11 @@ module.exports = function(RED) {
 
     var fullPath = join(RED.settings.httpNodeRoot, node.yadPath);
     var socketIoPath = join(fullPath, 'socket.io');
-    node.io = socketIO(server, {path: socketIoPath});
+
+    if(!socketIOInstances.has(node.yadPath)) {
+      socketIOInstances.set(node.yadPath, socketIO(server, {path: socketIoPath}));
+    }
+    node.io = socketIOInstances.get(node.yadPath);
 
     node.socketList = {};
 
@@ -74,7 +83,7 @@ module.exports = function(RED) {
 
             elementNode.recAjax(msg, mId);
           } else {
-            node.warn('node does not implement recAjax prototype');
+            node.warn('node does not implement recAjax function');
           }
         } else {
           node.warn('no node with elementId ' + msg.elementId);
@@ -86,6 +95,9 @@ module.exports = function(RED) {
 
     node.io.on('connection', function(socket) {
       node.socketList[socket.id] = socket;
+
+      // emit event when new ui client connects
+      node.eventEmitter.emit('newClientConnected');
 
       // receive message from ui
       socket.on('toNR', function(msg) {
@@ -131,8 +143,8 @@ module.exports = function(RED) {
       Object.keys(node.socketList).forEach(function(socketID) {
         node.socketList[socketID].disconnect(true);
       });
-      //node.io.close(); //?!? This closes the express/http instance?!?
-      // TODO properly close socketIO?
+
+      node.io.removeAllListeners();
 
       var routes = node.app._router.stack;
       for(var i = routes.length - 1; i >= 0; i--) {
@@ -217,8 +229,8 @@ module.exports = function(RED) {
   yad.prototype.createManifestJSON = function() {
     var node = this;
     var manifest = {
-      "name": node.yadPath, // TODO make that configurable
-      "short_name": node.yadPath, // TODO make that configurable
+      "name": node.yadPath,
+      "short_name": node.yadPath,
       "start_url": "/" + node.yadPath,
       "display": "standalone"
     };
@@ -230,9 +242,9 @@ module.exports = function(RED) {
 
   yad.prototype.copySrcFile = function(file) {
     var node = this;
-    var dest = path.join(node.yadFolder, file);
+    var dest = path.join(node.yadFolder, path.basename(file));
     if(!fs.existsSync(dest)) {
-      fs.copyFileSync(path.join(__dirname, '..', 'src/' + file), dest, fs.constants.COPYFILE_EXCL);
+      fs.copyFileSync(path.join(__dirname, file), dest, fs.constants.COPYFILE_EXCL);
     }
   }
 
@@ -249,11 +261,13 @@ module.exports = function(RED) {
         fs.mkdirSync(yadFolder);
       }
       node.yadFolder = yadFolder;
-      node.copySrcFile('index.html');
-      node.copySrcFile('style.css');
-      node.copySrcFile('main.js');
-      node.copySrcFile('widgets.js');
-      node.copySrcFile('bundle.js');
+
+      node.copySrcFile('../templates/main.js');
+      node.copySrcFile('../templates/bundle.js');
+      node.copySrcFile('../templates/bareboneDashboardTemplate/index.html');
+      node.copySrcFile('../templates/bareboneDashboardTemplate/widgets.js');
+      node.copySrcFile('../templates/bareboneDashboardTemplate/style.css');
+      
       node.createManifestJSON();
 
     } catch(e) {
@@ -266,7 +280,7 @@ module.exports = function(RED) {
   RED.nodes.registerType("yad-configuration", yad);
 }
 
-//from http://stackoverflow.com/a/28592528/3016654
+// from http://stackoverflow.com/a/28592528/3016654
 function join() {
   var trimRegex = new RegExp('^\\/|\\/$','g'),
   paths = Array.prototype.slice.call(arguments);

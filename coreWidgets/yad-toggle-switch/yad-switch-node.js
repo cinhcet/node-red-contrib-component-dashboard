@@ -26,18 +26,12 @@ module.exports = function(RED) {
     node.yad.initElementNode(node);
 
     node.on('input', function(m, send, done) {
-      if(m.hasOwnProperty('yadSessionID')) {
-        node.yad.ajaxResponse(m.yadSessionID, node, {payload: m.payload});
+      if(node.config.replay === true) {
+        node.yad.sendMessage(node, m, 'state');
       } else {
-        if(m.hasOwnProperty('replay') && m.replay === true && m.hasOwnProperty('topic')) {
-          node.yad.sendMessage(node, m, m.topic);
-        } else if(node.config.replayLastMessage === true) {
-          node.yad.sendMessage(node, m, '_lastMessageReplay');
-        } else {
-          node.yad.sendMessage(node, m);
-        }
+        node.yad.sendMessage(node, m);
       }
-      
+
       if(done) {
         done();
       }
@@ -50,14 +44,31 @@ module.exports = function(RED) {
 
   yadNode.prototype.recMessage = function(m) {
     var node = this;
-    if(node.config.topic !== '') m.topic = node.config.topic;
-    node.send(m);
+    var msg = {};
+    if(node.config.topic !== '') {
+      msg.topic = node.config.topic;
+    }
+    if(m.payload === true) {
+      node.sendBackToUIHelper(true);
+      msg.payload = RED.util.evaluateNodeProperty(node.config.onValue, node.config.onValueType, node);
+      node.send(msg);
+    } else if(m.payload === false) {
+      node.sendBackToUIHelper(false);
+      msg.payload = RED.util.evaluateNodeProperty(node.config.offValue, node.config.offValueType, node);
+      node.send(msg);
+    }
   }
 
-  yadNode.prototype.recAjax = function(params, mId) {
+  yadNode.prototype.sendBackToUIHelper = function(state) {
     var node = this;
-    node.send({payload: 'ajaxRequest', params: params, yadSessionID: mId});
+    if(!node.config.decoupled) {
+      if(node.config.replay === true) {
+        node.yad.sendMessage(node, {payload: state}, 'state');
+      } else {
+        node.yad.sendMessage(node, {payload: state});
+      }
+    }
   }
 
-  RED.nodes.registerType("yad-node", yadNode);
+  RED.nodes.registerType("yad-switch", yadNode);
 }
