@@ -51,7 +51,8 @@ After bundling, the dashboard can be reached at `http://127.0.0.1:1880/yad`
 
 ## Example
 The template that is copied automatically when a new dashboard is basically empty.
-To get started, locate the `node-red-contrib-component-dashboard` module, most probably be found in `userDir/node_modules/node-red-contrib-component-dashboard` and then copy all files except the `flows.json` from `node-red-contrib-component-dashboard/templates/exampleDashboard_1` to `userDir/yad/yad`, run the bundling and import `flows.json` into Node-RED. This will give you a basic dashboard.
+To get started, locate the `node-red-contrib-component-dashboard` module, most probably be found in `userDir/node_modules/node-red-contrib-component-dashboard` and then go to the folder `node-red-contrib-component-dashboard/templates/exampleDashboard_1` where you can find an example flow `flows.json` you can import into Node-RED.
+After deployment, copy all files (except `flows.json`) from `node-red-contrib-component-dashboard/templates/exampleDashboard_1` to `userDir/yad/yad` and run the bundling (`node bundle.js`). This will give you a basic dashboard at `http://127.0.0.1:1880/yad`.
 
 
 # Creating widgets
