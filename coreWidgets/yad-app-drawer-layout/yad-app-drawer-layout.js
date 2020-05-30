@@ -216,17 +216,12 @@ class Component extends LitElement {
     this.pageNames = [];
     this.currentPage = null;
     this.initialPage = 0;
+    this.mq = window.matchMedia('(max-width: 70em)');
   }
 
   connectedCallback() {
     super.connectedCallback()
     this._connectedCallbackHelper();
-    this.mq = window.matchMedia('(max-width: 70em)');
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    this._disconnectedCallbackHelper();
   }
 
 }

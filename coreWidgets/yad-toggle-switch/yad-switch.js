@@ -80,13 +80,9 @@ class Component extends HTMLElement {
 
   connectedCallback() {
     this._connectedCallbackHelper();
-    if(!this.noRipple) {
+    if(!this._rippleElement && !this.noRipple) {
       this.createRippleElement();
     } 
-  }
-
-  disconnectedCallback() {
-    this._disconnectedCallbackHelper();
   }
 
   static get observedAttributes() {

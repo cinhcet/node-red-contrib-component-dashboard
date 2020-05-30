@@ -16,31 +16,11 @@
 
 import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
 
-const template = document.createElement('template');
-template.innerHTML = /*html*/`
-  <style>
-    :host {
-      display: flex;
-      justify-content: space-between;
-    }
-    .label {
-      font-weight: bold;
-      color: var(--yad-primary-color, #0d47a1);
-      margin-right: 5px;
-    }
-  </style>
-  <slot class="label"></slot>
-  <div id="text"></div>
-`;
-
-
 class Component extends HTMLElement {
   
   constructor() {
     super();
     YAD.initYadElement(this);
-    this.attachShadow({mode: 'open'});
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   connectedCallback() {
@@ -49,9 +29,9 @@ class Component extends HTMLElement {
 
   nodeRedMsg(msg) {
     if(msg.hasOwnProperty('payload')) {
-      this.shadowRoot.getElementById('text').innerHTML = msg.payload;
+      this.innerHTML = msg.payload;
     }
   }
 }
 
-window.customElements.define('yad-text-widget', Component);
+window.customElements.define('yad-text-light', Component);

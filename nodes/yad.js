@@ -55,7 +55,15 @@ module.exports = function(RED) {
     var socketIoPath = join(fullPath, 'socket.io');
 
     if(!socketIOInstances.has(node.yadPath)) {
-      socketIOInstances.set(node.yadPath, socketIO(server, {path: socketIoPath}));
+      let socketIOInstance = socketIO(server, {path: socketIoPath});
+      socketIOInstance.use(function(socket, next) {
+        if(socket.handshake.xdomain === false) {
+          return next();
+        } else {
+          socket.disconnect(true);
+        }
+      });
+      socketIOInstances.set(node.yadPath, socketIOInstance);
     }
     node.io = socketIOInstances.get(node.yadPath);
 
@@ -264,6 +272,7 @@ module.exports = function(RED) {
 
       node.copySrcFile('../templates/main.js');
       node.copySrcFile('../templates/bundle.js');
+      node.copySrcFile('../templates/createWidget.js');
       node.copySrcFile('../templates/bareboneDashboardTemplate/index.html');
       node.copySrcFile('../templates/bareboneDashboardTemplate/widgets.js');
       node.copySrcFile('../templates/bareboneDashboardTemplate/style.css');

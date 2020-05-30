@@ -51,13 +51,9 @@ class Component extends HTMLElement {
 
   connectedCallback() {
     this._connectedCallbackHelper();
-    if(!this.hasAttribute('options')) {
+    if(!this.gauge) {
       this.renderGauge();
     }
-  }
-
-  disconnectedCallback() {
-    this._disconnectedCallbackHelper();
   }
 
   renderGauge() {

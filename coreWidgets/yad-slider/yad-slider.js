@@ -44,6 +44,16 @@ template.innerHTML = /*html*/`
       border-radius: 4px;
       background-color: var(--yad-slider-bar-color, rgb(180, 180, 180));
     }
+    #barValue {
+      box-sizing: border-box;
+      position: absolute;
+      top: 6px;
+      width: 0;
+      height: 8px;
+      margin: 0 -4px;
+      border-radius: 4px;
+      background-color: var(--yad-primary-color-light);
+    }
     #button {
       position: absolute;
       height: 20px;
@@ -55,10 +65,45 @@ template.innerHTML = /*html*/`
       box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.7);
       background-color: var(--yad-primary-color);
     }
+    .tooltip {
+      box-sizing: border-box;
+      position: absolute;
+      background-color: white;
+      top: 10px;
+      left: 10px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+      overflow: hidden;
+      border: solid;
+      border-size: 4px;
+      border-color: var(--yad-primary-color);
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .active {
+      top: -25px;
+      width: 40px;
+      height: 40px;
+      left: 50%;
+      margin-left: -20px;
+      margin-top: -20px;
+      opacity: 1;
+    }
+    #tooltipText {
+
+    }
   </style>
   <div id="wrapper">
     <div id="bar"></div>
-    <div id="button"></div>
+    <div id="barValue"></div>
+    <div id="button">
+      <div id="tooltip" class="tooltip"><span id="tooltipText"></span></div>
+    </div>
   </div>
 `;
 
@@ -76,6 +121,9 @@ class Component extends HTMLElement {
     this._mouseUpListener = this.mouseUpListener.bind(this);
     this._wrapper = this.shadowRoot.getElementById('wrapper');
     this._button = this.shadowRoot.getElementById('button');
+    this._barValue = this.shadowRoot.getElementById('barValue');
+    this._tooltip = this.shadowRoot.getElementById('tooltip');
+    this._tooltipText = this.shadowRoot.getElementById('tooltipText');
 
     this._isDragging = false;
 
@@ -86,6 +134,9 @@ class Component extends HTMLElement {
     this._value = this._min;
     
     this._nocont = false;
+
+    this._tooltipTimeout = null;
+    this._timePressed = 0;
   }
 
   connectedCallback() {
@@ -95,10 +146,6 @@ class Component extends HTMLElement {
     if(!this.hasAttribute('step')) this.setAttribute('step', this._step);
     if(!this.hasAttribute('value')) this.setAttribute('value', this._value);
     // this.moveSliderToValue();
-  }
-
-  disconnectedCallback() {
-    this._disconnectedCallbackHelper();
   }
 
   static get observedAttributes() {
@@ -165,20 +212,32 @@ class Component extends HTMLElement {
   }
 
   mouseDownListener(e) {  
+    clearTimeout(this._tooltipTimeout);
+    this._timePressed = new Date();
     this.setPosition(e);
     window.addEventListener('mousemove', this._mouseMoveListener);
     window.addEventListener('touchmove', this._mouseMoveListener);
     window.addEventListener('mouseup', this._mouseUpListener);
     window.addEventListener('touchend', this._mouseUpListener);
+    this._tooltip.classList.add('active');
     this._isDragging = true;
   }
-  mouseUpListener(e) {
+  mouseUpListener() {
     this._isDragging = false;
     window.removeEventListener('mousemove', this._mouseMoveListener);
     window.removeEventListener('touchmove', this._mouseMoveListener);
     window.removeEventListener('mouseup', this._mouseUpListener);
     window.removeEventListener('touchend', this._mouseUpListener);
     this._sendToNR({payload: this._value, finished: true});
+    
+    if(new Date() - this._timePressed < 200) {
+      this._tooltipTimeout = setTimeout(function() {
+        this._tooltip.classList.remove('active');
+      }.bind(this), 800);
+    } else {
+      this._tooltip.classList.remove('active');
+    }
+    
   }
   mouseMoveListener(e) {
     if(this._isDragging) {
@@ -207,6 +266,8 @@ class Component extends HTMLElement {
   moveSliderToValue() {
     let xRel = (this._value - this._min)/(this._max - this._min);
     this._button.style.left = xRel*100 + '%';
+    this._barValue.style.width = xRel*100 + '%';
+    this._tooltipText.innerHTML = this._value;
   }
 
   nodeRedMsg(msg) {

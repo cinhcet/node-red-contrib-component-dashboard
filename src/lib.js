@@ -97,6 +97,9 @@ class YADClass {
 
   initYadElement(yadElement) {
     var self = this;
+
+    yadElement._yadConnectedInit = false;
+
     Object.defineProperty(yadElement, 'elementId', {
       get: function () {
         if(yadElement.parentId === '') {
@@ -135,6 +138,8 @@ class YADClass {
     }
 
     yadElement._connectedCallbackHelper = function() {
+      if(yadElement._yadConnectedInit) return;
+      yadElement._yadConnectedInit = true;
       if(!yadElement.noMsg) {
         if(yadElement.id === '') {
           console.log('Please specify an ID for that element!');
@@ -143,9 +148,6 @@ class YADClass {
           self.sendElementInitMsgToNR(yadElement);
         }
       }
-    }
-    yadElement._disconnectedCallbackHelper = function() {
-      self.removeYadElement(yadElement);
     }
   }
 

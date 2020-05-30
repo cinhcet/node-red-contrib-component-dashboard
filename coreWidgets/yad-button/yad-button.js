@@ -61,10 +61,6 @@ class Component extends HTMLElement {
     this._connectedCallbackHelper(); 
   }
 
-  disconnectedCallback() {
-    this._disconnectedCallbackHelper();
-  }
-
   press() {
     this._sendToNR({payload: true});
   }
