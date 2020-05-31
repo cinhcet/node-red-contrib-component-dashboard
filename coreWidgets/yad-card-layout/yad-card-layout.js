@@ -7,7 +7,7 @@ template.innerHTML = /*html*/`
       align-items: flex-start;
     }
     .column {
-      min-width: 320px;
+      min-width: 380px;
       max-width: 480px;
       flex-grow: 1;
       /* margin-right: 3px; */
@@ -45,7 +45,11 @@ class Component extends HTMLElement {
     let width = this.getBoundingClientRect().width;
     if(width == 0) return;
 
-    let numberOfColumns = Math.floor(width / 320);
+    let numberOfColumns = Math.floor(width / 380);
+
+    if(numberOfColumns > this.children.length) {
+      numberOfColumns = this.children.length;
+    }
 
     if(numberOfColumns == this.numberOfColumns) return;
     this.numberOfColumns = numberOfColumns;
