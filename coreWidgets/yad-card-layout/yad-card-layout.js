@@ -46,6 +46,8 @@ class Component extends HTMLElement {
     if(width == 0) return;
 
     let numberOfColumns = Math.floor(width / 380);
+    
+    if(numberOfColumns == 0) numberOfColumns = 1;
 
     if(numberOfColumns > this.children.length) {
       numberOfColumns = this.children.length;
