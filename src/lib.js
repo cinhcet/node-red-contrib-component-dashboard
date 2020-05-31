@@ -21,6 +21,7 @@ class YADClass {
     this.socket = null;
     this.reconnectTimer = null;
     this.yadElements = {};
+    this.connected = false;
   }
 
   addYadElement(yadElement) {
@@ -55,10 +56,15 @@ class YADClass {
     this.socket.on('connect', function () {
       console.log('connected');
       window.clearTimeout(self.reconnectTimer);
+      self.connected = true;
+      Object.values(self.yadElements).forEach(function(yadElement) {
+        self.sendElementInitMsgToNR(yadElement);
+      });
     });
 
     this.socket.on('disconnect', function () {
       console.log('disconnected');
+      self.connected = false;
       self.reconnectTimer = window.setTimeout(function() {
         self.socket.close();
         self.socket.connect();
@@ -120,11 +126,7 @@ class YADClass {
     });
     Object.defineProperty(yadElement, 'noMsg', {
       get: function () {
-        if(yadElement.hasAttribute('no-msg')) {
-          return true;
-        } else {
-          return false;
-        }
+        return yadElement.hasAttribute('no-msg');
       }
     });
  
@@ -145,7 +147,9 @@ class YADClass {
           console.log('Please specify an ID for that element!');
         } else {
           self.addYadElement(yadElement);
-          self.sendElementInitMsgToNR(yadElement);
+          if(self.connected) {
+            self.sendElementInitMsgToNR(yadElement);
+          }
         }
       }
     }

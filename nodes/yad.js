@@ -122,7 +122,7 @@ module.exports = function(RED) {
           var elementNode = node.elementNodes[msg.elementID];
 
           // Init message when a new ui client connects
-          if(Object.keys(elementNode.initMessageOnConnect)) {
+          if(elementNode.initMessageOnConnect) {
             var sendMsg = {elementID: elementNode.elementID, msg: elementNode.initMessageOnConnect, type: 'initMsgOC'};
             socket.emit('fromNR', JSON.stringify(sendMsg));
           }
@@ -205,7 +205,7 @@ module.exports = function(RED) {
     elementNode.resObjects = {};
     elementNode.resObjectsTimeouts = {};
 
-    elementNode.initMessageOnConnect = {};
+    elementNode.initMessageOnConnect = null;
     elementNode.replayMessages = {};
 
     elementNode.yad.addElementNode(elementNode);
