@@ -16,7 +16,7 @@
 
 import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
 import { LitElement, html, css } from 'lit-element';
-import 'yad-icons/components/yad-icon-mdi-menu.js';
+import 'yad-icons-iconify/components/mdi/yad-icon-mdi-menu.js';
 
 function headerTemplate(pageNames) {
   return html`
