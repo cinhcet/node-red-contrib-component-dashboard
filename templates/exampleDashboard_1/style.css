@@ -29,19 +29,11 @@ html {
   height: 100%;
 }
 
-.yad-groups {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: stretch;
-}
 
 .yad-group-container {
-  margin: 3px;
-  max-width: 480px;
-  min-width: 320px;
-  flex-grow: 1;
-  box-sizing: border-box;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 6px;
 }
 
 .yad-group-card {

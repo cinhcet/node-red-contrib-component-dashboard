@@ -26,148 +26,150 @@
     <div slot="room__header">Room Header</div>
 
     <!-- page home -->
-    <div slot="home" class="yad-groups"> 
+    <div slot="home"> 
+      <yad-card-layout>
 
-      <div class="yad-group-container yad-group-card yad-group-rows">
+        <div class="yad-group-container yad-group-card yad-group-rows">
         
-        <div class="yad-group-row" style="display: flex; align-items: center; justify-content: space-between;">
-          <div style="font-size: 24px;">Lights</div>
-          <yad-toggle one-way="off" id="lightStatusAll" style="width: auto;">
-            <yad-icon-mdi-lightbulb style="--yad-icon-size: 30px; fill: black;"></yad-icon-mdi-lightbulb>
-            <yad-icon-mdi-lightbulb-on slot="on" style="--yad-icon-size: 30px; fill: orange;"></yad-icon-mdi-lightbulb-on>
-          </yad-toggle>            
+          <div class="yad-group-row" style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 24px;">Lights</div>
+            <yad-toggle one-way="off" id="lightStatusAll" style="width: auto;">
+              <yad-icon-mdi-lightbulb style="--yad-icon-size: 30px; fill: black;"></yad-icon-mdi-lightbulb>
+              <yad-icon-mdi-lightbulb-on slot="on" style="--yad-icon-size: 30px; fill: orange;"></yad-icon-mdi-lightbulb-on>
+            </yad-toggle>            
+          </div>
+                
+          <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
+            <yad-toggle no-click id="light_1_status" style="width: auto; margin-right:16px;">
+              <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
+              <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
+            </yad-toggle>  
+            <div style="flex-grow: 1;">Light 1</div>
+            <yad-switch id="light_1_switch"></yad-switch>
+          </div>
+  
+          <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
+            <yad-toggle no-click id="light_2_status" style="width: auto; margin-right:16px;">
+              <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
+              <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
+            </yad-toggle>  
+            <div style="flex-grow: 1;">Light 2</div>
+            <yad-switch id="light_2_switch"></yad-switch>
+          </div>
+  
+          <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
+            <yad-toggle no-click id="light_3_status" style="width: auto; margin-right:16px;">
+              <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
+              <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
+            </yad-toggle>  
+            <div style="flex-grow: 1;">Light 3</div>
+            <yad-switch id="light_3_switch"></yad-switch>
+          </div>
+          <div class="yad-group-row">
+            After turning some lights on, press light bulb on upper right corner
+          </div>
         </div>
-              
-        <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
-          <yad-toggle no-click id="light_1_status" style="width: auto; margin-right:16px;">
-            <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
-            <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
-          </yad-toggle>  
-          <div style="flex-grow: 1;">Light 1</div>
-          <yad-switch id="light_1_switch"></yad-switch>
+        
+        <div class="yad-group-container yad-group-card yad-group-rows">
+          <div class="yad-group-row yad-group-columns">
+            <yad-button id="button1" class="yad-group-column">Button 1</yad-button>
+            <yad-button id="button2" class="yad-group-column">Button 2</yad-button>
+          </div>
+  
+          <div class="yad-group-row yad-group-columns">
+            <yad-button id="button3" class="yad-group-column"
+                        style="--yad-primary-color: var(--yad-accent-color); --yad-primary-color-light: var(--yad-accent-color-light);">Button 3</yad-button>
+            <yad-button id="button4" class="yad-group-column">Button 4</yad-button>
+            <yad-button id="button5" class="yad-group-column"
+                        style="padding-top: 0; padding-bottom: 0; display: flex; align-items: center; justify-content: center;">
+              <yad-icon-mdi-bell style="fill: orange; margin-right: 5px;"></yad-icon-mdi-bell>
+              Icon
+            </yad-button>
+          </div>
+  
+          <div class="yad-group-row" style="margin-top: 30px;">
+            Button with auto width
+            <yad-button id="button6" style="width:auto; margin-left: 20px;">Action</yad-button>
+          </div>
         </div>
-
-        <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
-          <yad-toggle no-click id="light_2_status" style="width: auto; margin-right:16px;">
-            <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
-            <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
-          </yad-toggle>  
-          <div style="flex-grow: 1;">Light 2</div>
-          <yad-switch id="light_2_switch"></yad-switch>
+  
+  
+        <div class="yad-group-container yad-group-card yad-group-rows">
+          <div class="yad-group-row">
+            <yad-text-widget id="text1">Temperature</yad-text-widget>
+          </div>    
+          <div class="yad-group-row">
+            <yad-text-widget id="text2"></yad-text-widget>
+          </div> 
+          <div class="yad-group-row yad-group-columns">
+            <!-- for all options see https://github.com/toorshia/justgage#options -->
+            <yad-justgage id="gaugeTemp"
+                          class="yad-group-column"
+                          options='{"value": 0, "min": 0, "max": "50", "symbol": " °C"}'>Temperature</yad-justgage>
+            <yad-justgage id="gaugeHum" 
+                          class="yad-group-column"
+                          options='{"value": 0, "min": 0, "max": "100", "symbol": " %"}'>Humidity</yad-justgage>
+          </div>
+  
+                
+  
         </div>
-
-        <div class="yad-group-row" style="display: flex; align-items: center; margin-top:20px;">
-          <yad-toggle no-click id="light_3_status" style="width: auto; margin-right:16px;">
-            <yad-icon-mdi-lightbulb  style="fill: black;"></yad-icon-mdi-lightbulb>
-            <yad-icon-mdi-lightbulb-on slot="on"  style="fill: orange;"></yad-icon-mdi-lightbulb-on>
-          </yad-toggle>  
-          <div style="flex-grow: 1;">Light 3</div>
-          <yad-switch id="light_3_switch"></yad-switch>
+  
+  
+        <div class="yad-group-container yad-group-rows">
+          <div class="yad-group-row yad-group-columns">
+            <yad-toggle id="toggle1" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
+              <div>
+                <div style="text-align: center; margin-top: 10px;">Light</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
+              </div>
+              <div slot="on"> 
+                <div style="text-align: center; margin-top: 10px; color: orange;">Light on</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:orange;"></yad-icon-mdi-lightbulb> 
+              </div> 
+            </yad-toggle>
+            <yad-toggle id="toggle2" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
+              <div>
+                <div style="text-align: center; margin-top: 10px;">Light off</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
+              </div>
+              <div slot="on"> 
+                <div style="text-align: center; margin-top: 10px; color: var(--yad-primary-color-light);">Light on</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:var(--yad-primary-color-light);"></yad-icon-mdi-lightbulb> 
+              </div> 
+            </yad-toggle>
+            <yad-toggle id="toggle3" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
+              <div>
+                <div style="text-align: center; margin-top: 10px;">Light</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
+              </div>
+              <div slot="on"> 
+                <div style="text-align: center; margin-top: 10px; color: green;">Light on</div>
+                <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:green;"></yad-icon-mdi-lightbulb> 
+              </div> 
+            </yad-toggle> 
+          </div>  
         </div>
-        <div class="yad-group-row">
-          After turning some lights on, press light bulb on upper right corner
+  
+        <div class="yad-group-container yad-group-card yad-group-rows">
+          <div class="yad-group-row">
+            <yad-slider id="slider1" value="50" max="200"></yad-slider>            
+          </div>
+          <div class="yad-group-row">
+            <yad-slider id="slider2" min="100" max="-100" step="20"></yad-slider>            
+          </div>
+          <div class="yad-group-row">
+            <yad-slider id="slider3" min="0" max="100"></yad-slider>            
+          </div>
+          <div class="yad-group-row">
+            <yad-slider id="slider4" min="0" max="100"></yad-slider>            
+          </div>
+          <div class="yad-group-row">
+            <yad-slider id="slider5" min="0" max="100" no-cont></yad-slider>            
+          </div>
         </div>
-      </div>
-      
-      <div class="yad-group-container yad-group-card yad-group-rows">
-        <div class="yad-group-row yad-group-columns">
-          <yad-button id="button1" class="yad-group-column">Button 1</yad-button>
-          <yad-button id="button2" class="yad-group-column">Button 2</yad-button>
-        </div>
-
-        <div class="yad-group-row yad-group-columns">
-          <yad-button id="button3" class="yad-group-column"
-                      style="--yad-primary-color: var(--yad-accent-color); --yad-primary-color-light: var(--yad-accent-color-light);">Button 3</yad-button>
-          <yad-button id="button4" class="yad-group-column">Button 4</yad-button>
-          <yad-button id="button5" class="yad-group-column"
-                      style="padding-top: 0; padding-bottom: 0; display: flex; align-items: center; justify-content: center;">
-            <yad-icon-mdi-bell style="fill: orange; margin-right: 5px;"></yad-icon-mdi-bell>
-            Icon
-          </yad-button>
-        </div>
-
-        <div class="yad-group-row" style="margin-top: 30px;">
-          Button with auto width
-          <yad-button id="button6" style="width:auto; margin-left: 20px;">Action</yad-button>
-        </div>
-      </div>
-
-
-      <div class="yad-group-container yad-group-card yad-group-rows">
-        <div class="yad-group-row">
-          <yad-text-widget id="text1">Temperature</yad-text-widget>
-        </div>    
-        <div class="yad-group-row">
-          <yad-text-widget id="text2"></yad-text-widget>
-        </div> 
-        <div class="yad-group-row yad-group-columns">
-          <!-- for all options see https://github.com/toorshia/justgage#options -->
-          <yad-justgage id="gaugeTemp"
-                        class="yad-group-column"
-                        options='{"value": 0, "min": 0, "max": "50", "symbol": " °C"}'>Temperature</yad-justgage>
-          <yad-justgage id="gaugeHum" 
-                        class="yad-group-column"
-                        options='{"value": 0, "min": 0, "max": "100", "symbol": " %"}'>Humidity</yad-justgage>
-        </div>
-
-              
-
-      </div>
-
-
-      <div class="yad-group-container yad-group-rows">
-        <div class="yad-group-row yad-group-columns">
-          <yad-toggle id="toggle1" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
-            <div>
-              <div style="text-align: center; margin-top: 10px;">Light</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
-            </div>
-            <div slot="on"> 
-              <div style="text-align: center; margin-top: 10px; color: orange;">Light on</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:orange;"></yad-icon-mdi-lightbulb> 
-            </div> 
-          </yad-toggle>
-          <yad-toggle id="toggle2" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
-            <div>
-              <div style="text-align: center; margin-top: 10px;">Light off</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
-            </div>
-            <div slot="on"> 
-              <div style="text-align: center; margin-top: 10px; color: var(--yad-primary-color-light);">Light on</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:var(--yad-primary-color-light);"></yad-icon-mdi-lightbulb> 
-            </div> 
-          </yad-toggle>
-          <yad-toggle id="toggle3" class="yad-group-card" style="margin-right: 6px; padding: 0;" contained-ripple>
-            <div>
-              <div style="text-align: center; margin-top: 10px;">Light</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill: black;"></yad-icon-mdi-lightbulb>
-            </div>
-            <div slot="on"> 
-              <div style="text-align: center; margin-top: 10px; color: green;">Light on</div>
-              <yad-icon-mdi-lightbulb style="--yad-icon-size: 100%; fill:green;"></yad-icon-mdi-lightbulb> 
-            </div> 
-          </yad-toggle> 
-        </div>  
-      </div>
-
-      <div class="yad-group-container yad-group-card yad-group-rows">
-        <div class="yad-group-row">
-          <yad-slider id="slider1" value="50" max="200"></yad-slider>            
-        </div>
-        <div class="yad-group-row">
-          <yad-slider id="slider2" min="100" max="-100" step="20"></yad-slider>            
-        </div>
-        <div class="yad-group-row">
-          <yad-slider id="slider3" min="0" max="100"></yad-slider>            
-        </div>
-        <div class="yad-group-row">
-          <yad-slider id="slider4" min="0" max="100"></yad-slider>            
-        </div>
-        <div class="yad-group-row">
-          <yad-slider id="slider5" min="0" max="100" no-cont></yad-slider>            
-        </div>
-      </div>
-
+        
+      </yad-card-layout>
     </div>
     <!-- end page home -->
 

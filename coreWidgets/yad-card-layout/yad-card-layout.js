@@ -10,8 +10,6 @@ template.innerHTML = /*html*/`
       min-width: 380px;
       max-width: 480px;
       flex-grow: 1;
-      /* margin-right: 3px; */
-      /* margin-left: 3px; */
       flex-basis: var(--yad-card-layout-column-flex-basis, auto);
     }
   </style>
@@ -46,7 +44,7 @@ class Component extends HTMLElement {
     if(width == 0) return;
 
     let numberOfColumns = Math.floor(width / 380);
-    
+
     if(numberOfColumns == 0) numberOfColumns = 1;
 
     if(numberOfColumns > this.children.length) {
