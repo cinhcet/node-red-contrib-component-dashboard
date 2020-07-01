@@ -109,10 +109,12 @@ module.exports = function(RED) {
 
       // receive message from ui
       socket.on('toNR', function(msg) {
-        msg.msg._socketid = socket.id;
-        if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
-          if(node.elementNodes.hasOwnProperty(msg.elementID)) {
-            node.elementNodes[msg.elementID].recMessage(msg.msg);
+        if(msg.hasOwnProperty('msg')) {
+          msg.msg._socketid = socket.id;
+          if(msg.hasOwnProperty('elementID')) {
+            if(node.elementNodes.hasOwnProperty(msg.elementID)) {
+              node.elementNodes[msg.elementID].recMessage(msg.msg);
+            }
           }
         }
       });
