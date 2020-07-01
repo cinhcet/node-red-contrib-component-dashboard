@@ -109,6 +109,7 @@ module.exports = function(RED) {
 
       // receive message from ui
       socket.on('toNR', function(msg) {
+        msg.msg._socketid = socket.id;
         if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
           if(node.elementNodes.hasOwnProperty(msg.elementID)) {
             node.elementNodes[msg.elementID].recMessage(msg.msg);
@@ -169,7 +170,11 @@ module.exports = function(RED) {
   yad.prototype.sendMessage = function(elementNode, msg, replayMsgId) {
     var node = this;
     var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
-    node.io.emit('fromNR', JSON.stringify(sendMsg));
+    if(msg.hasOwnProperty('_socketid')) {
+      node.socketList[msg._socketid].emit('fromNR', JSON.stringify(sendMsg));
+    } else {
+      node.io.emit('fromNR', JSON.stringify(sendMsg));
+    }
 
     // optional save message for replay when a new client connects
     if(replayMsgId) {
@@ -276,7 +281,7 @@ module.exports = function(RED) {
       node.copySrcFile('../templates/bareboneDashboardTemplate/index.html');
       node.copySrcFile('../templates/bareboneDashboardTemplate/widgets.js');
       node.copySrcFile('../templates/bareboneDashboardTemplate/style.css');
-      
+
       node.createManifestJSON();
 
     } catch(e) {
