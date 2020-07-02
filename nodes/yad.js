@@ -105,7 +105,10 @@ module.exports = function(RED) {
       node.socketList[socket.id] = socket;
 
       // emit event when new ui client connects
-      node.eventEmitter.emit('newClientConnected');
+      node.eventEmitter.emit('newClientConnected', {
+        payload: 'newClientConnected',
+        _socketid: socket.id
+      });
 
       // receive message from ui
       socket.on('toNR', function(msg) {

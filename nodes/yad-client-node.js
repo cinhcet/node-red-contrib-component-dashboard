@@ -23,8 +23,8 @@ module.exports = function(RED) {
     node.config = config;
     node.yad = RED.nodes.getNode(node.config.yad);
 
-    function newClientConnectedCallback() {
-      node.send({payload: 'newClientConnected'});
+    function newClientConnectedCallback(message) {
+      node.send(message);
     }
 
     node.yad.eventEmitter.on('newClientConnected', newClientConnectedCallback);
