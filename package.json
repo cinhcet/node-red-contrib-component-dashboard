@@ -15,12 +15,13 @@
     "parcel-bundler": "^1.11.0",
     "yad-icons-iconify": "cinhcet/yad-icons-iconify",
     "lit-element": "^2.3.1",
-    "justgage": "^1.3.5" 
+    "justgage": "^1.3.5"
   },
   "node-red": {
     "nodes": {
       "yad": "nodes/yad.js",
-      "yad-client-node": "nodes/yad-client-node.js",
+      "yad-client-connected-node": "nodes/yad-client-connected-node.js",
+      "yad-client-disconnected-node": "nodes/yad-client-disconnected-node.js",
       "yad-node": "nodes/yad-node.js",
       "yad-switch": "coreWidgets/yad-toggle-switch/yad-switch-node.js",
       "yad-slider": "coreWidgets/yad-slider/yad-slider-node.js"

@@ -23,16 +23,16 @@ module.exports = function(RED) {
     node.config = config;
     node.yad = RED.nodes.getNode(node.config.yad);
 
-    function newClientConnectedCallback(message) {
+    function clientDisconnectedCallback(message) {
       node.send(message);
     }
 
-    node.yad.eventEmitter.on('newClientConnected', newClientConnectedCallback);
+    node.yad.eventEmitter.on('clientDisconnected', clientDisconnectedCallback);
 
     node.on('close', function() {
-      node.yad.eventEmitter.removeListener('newClientConnected', newClientConnectedCallback);
+      node.yad.eventEmitter.removeListener('clientDisconnected', clientDisconnectedCallback);
     });
   }
 
-  RED.nodes.registerType("yad-client-node", yadNode);
+  RED.nodes.registerType("yad-client-disconnected-node", yadNode);
 }

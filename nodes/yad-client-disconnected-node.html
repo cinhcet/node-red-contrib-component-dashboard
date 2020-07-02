@@ -1,0 +1,54 @@
+<!--
+  Copyright (c) 2020 cinhcet
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/javascript">
+  RED.nodes.registerType('yad-client-disconnected-node', {
+    category: 'YAD Component Dashboard',
+    color: '#2196F3',
+    defaults: {
+      yad: {
+        value: "",
+        required: true,
+        type: "yad-configuration"
+      },
+      name: {
+        value: ""
+      }
+    },
+    inputs: 0,
+    outputs: 1,
+    icon: "yad-icon.svg",
+    label: function() {
+      return this.name || "client disconnected";
+    },
+    paletteLabel: 'client disconnected'
+  });
+</script>
+
+<script type="text/x-red" data-template-name="yad-client-disconnected-node">
+  <div class="form-row">
+    <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
+    <input type="text" id="node-input-yad">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="yad-client-disconnected-node">
+  <p>Emits message if new ui client disconnects</p>
+</script>

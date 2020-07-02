@@ -1,6 +1,6 @@
 <!--
   Copyright (c) 2020 cinhcet
- 
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -15,7 +15,7 @@
 -->
 
 <script type="text/javascript">
-  RED.nodes.registerType('yad-client-node', {
+  RED.nodes.registerType('yad-client-connected-node', {
     category: 'YAD Component Dashboard',
     color: '#2196F3',
     defaults: {
@@ -32,13 +32,13 @@
     outputs: 1,
     icon: "yad-icon.svg",
     label: function() {
-      return this.name || "ui client connect";
+      return this.name || "client connected";
     },
-    paletteLabel: 'client node'
+    paletteLabel: 'client connected'
   });
 </script>
 
-<script type="text/x-red" data-template-name="yad-client-node">
+<script type="text/x-red" data-template-name="yad-client-connected-node">
   <div class="form-row">
     <label for="node-input-yad"><i class="fa fa-globe"></i> YAD Configuration</label>
     <input type="text" id="node-input-yad">
@@ -49,6 +49,6 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="yad-client-node">
+<script type="text/x-red" data-help-name="yad-client-connected-node">
   <p>Emits message if new ui client connects</p>
 </script>

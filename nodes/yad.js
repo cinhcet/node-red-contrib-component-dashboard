@@ -146,6 +146,12 @@ module.exports = function(RED) {
 
       socket.on('disconnect', function() {
         delete node.socketList[socket.id];
+
+        // emit event when new ui client disconnects
+        node.eventEmitter.emit('clientDisconnected', {
+          payload: 'clientDisconnected',
+          _socketid: socket.id
+        });
       });
     });
 
