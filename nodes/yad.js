@@ -183,7 +183,7 @@ module.exports = function(RED) {
     var node = this;
     var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
     if(msg.hasOwnProperty('_socketid')) {
-      (msg._socketid instanceof Array ? msg._socketid : [msg._socketid])
+      (Array.isArray(msg._socketid) ? msg._socketid : [msg._socketid])
         .forEach(function(socketId) {
           if(typeof socketId === 'string') {
             node.socketList[socketId].emit('fromNR', JSON.stringify(sendMsg));
