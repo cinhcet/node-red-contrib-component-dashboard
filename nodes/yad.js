@@ -108,20 +108,7 @@ module.exports = function(RED) {
       node.eventEmitter.emit('newClientConnected', {
         payload: 'newClientConnected',
         _socketid: socket.id,
-        _cookies: socket.handshake.headers.cookie &&
-          socket.handshake.headers.cookie
-          .split('; ')
-          .map(function(entry) {
-            var index = entry.indexOf('=');
-            return {
-              name: entry.slice(0, index),
-              value: entry.slice(index + 1)
-            };
-          })
-          .reduce(function(cookies, cookie) {
-            cookies[cookie.name] = cookie.value;
-            return cookies;
-          }, {})
+        _cookies: socket.handshake.headers.cookie
       });
 
       // receive message from ui
