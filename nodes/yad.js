@@ -196,7 +196,14 @@ module.exports = function(RED) {
     var node = this;
     var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
     if(msg.hasOwnProperty('_socketid')) {
-      node.socketList[msg._socketid].emit('fromNR', JSON.stringify(sendMsg));
+      (msg._socketid instanceof Array ? msg._socketid : [msg._socketid])
+        .forEach(function(socketId) {
+          if(typeof socketId === 'string') {
+            node.socketList[socketId].emit('fromNR', JSON.stringify(sendMsg));
+          } else {
+            elementNode.warn('_socketid must be a string or a string array');
+          }
+        });
     } else {
       node.io.emit('fromNR', JSON.stringify(sendMsg));
     }
