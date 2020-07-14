@@ -8,7 +8,7 @@
     },
     {
         "id": "c1ed682.e526998",
-        "type": "yad-client-connected-node",
+        "type": "yad-client-node",
         "z": "e0aeb5d1.821c1",
         "yad": "7251761.59f7908",
         "name": "",

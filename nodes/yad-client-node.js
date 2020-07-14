@@ -23,16 +23,28 @@ module.exports = function(RED) {
     node.config = config;
     node.yad = RED.nodes.getNode(node.config.yad);
 
-    function clientDisconnectedCallback(message) {
-      node.send(message);
+    function sendConnectionMessage(message) {
+      node.send({
+        payload: 'newClientConnected',
+        ...message
+      });
     }
 
-    node.yad.eventEmitter.on('clientDisconnected', clientDisconnectedCallback);
+    function sendDisconnectionMessage(message) {
+      node.send({
+        payload: 'clientDisconnected',
+        ...message
+      });
+    }
+
+    node.yad.eventEmitter.on('newClientConnected', sendConnectionMessage);
+    node.yad.eventEmitter.on('clientDisconnected', sendDisconnectionMessage);
 
     node.on('close', function() {
-      node.yad.eventEmitter.removeListener('clientDisconnected', clientDisconnectedCallback);
+      node.yad.eventEmitter.removeListener('newClientConnected', sendConnectionMessage);
+      node.yad.eventEmitter.removeListener('clientDisconnected', sendDisconnectionMessage);
     });
   }
 
-  RED.nodes.registerType("yad-client-disconnected-node", yadNode);
+  RED.nodes.registerType("yad-client-node", yadNode);
 }

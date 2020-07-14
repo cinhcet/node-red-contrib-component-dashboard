@@ -106,7 +106,6 @@ module.exports = function(RED) {
 
       // emit event when new ui client connects
       node.eventEmitter.emit('newClientConnected', {
-        payload: 'newClientConnected',
         _socketid: socket.id,
         _cookies: socket.handshake.headers.cookie
       });
@@ -148,9 +147,8 @@ module.exports = function(RED) {
       socket.on('disconnect', function() {
         delete node.socketList[socket.id];
 
-        // emit event when new ui client disconnects
+        // emit event when ui client disconnects
         node.eventEmitter.emit('clientDisconnected', {
-          payload: 'clientDisconnected',
           _socketid: socket.id
         });
       });
