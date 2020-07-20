@@ -44,7 +44,9 @@ module.exports = function(RED) {
 
   yadNode.prototype.recMessage = function(m) {
     var node = this;
-    var msg = {};
+    var msg = {
+      _socketid: m._socketid
+    };
     if(node.config.topic !== '') {
       msg.topic = node.config.topic;
     }
