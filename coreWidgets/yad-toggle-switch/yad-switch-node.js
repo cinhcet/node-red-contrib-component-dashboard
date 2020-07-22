@@ -51,23 +51,29 @@ module.exports = function(RED) {
       msg.topic = node.config.topic;
     }
     if(m.payload === true) {
-      node.sendBackToUIHelper(true);
+      node.sendBackToUIHelper(true, m._socketid);
       msg.payload = RED.util.evaluateNodeProperty(node.config.onValue, node.config.onValueType, node);
       node.send(msg);
     } else if(m.payload === false) {
-      node.sendBackToUIHelper(false);
+      node.sendBackToUIHelper(false, m._socketid);
       msg.payload = RED.util.evaluateNodeProperty(node.config.offValue, node.config.offValueType, node);
       node.send(msg);
     }
   }
 
-  yadNode.prototype.sendBackToUIHelper = function(state) {
+  yadNode.prototype.sendBackToUIHelper = function(state, _socketid) {
     var node = this;
     if(!node.config.decoupled) {
       if(node.config.replay === true) {
-        node.yad.sendMessage(node, {payload: state}, 'state');
+        node.yad.sendMessage(node, {
+          payload: state,
+          _socketid
+        }, 'state');
       } else {
-        node.yad.sendMessage(node, {payload: state});
+        node.yad.sendMessage(node, {
+          payload: state,
+          _socketid
+        });
       }
     }
   }
