@@ -21,7 +21,7 @@
     defaults: {
       yad: {
         value: "",
-        required: true,
+        required: false,
         type: "yad-configuration"
       },
       name: {
@@ -50,5 +50,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="yad-client-node">
-  <p>Emits messages when UI clients connect or disconnect.</p>
+  <p>Emits messages when UI clients connect to, or disconnect from, the configured dashboards.</p>
+  <p>If you specify a YAD Configuration, the node will notify about user activity regarding to the related dashboard only.
+    Otherwise, the node will notify about any configured dashboard.</p>
 </script>
