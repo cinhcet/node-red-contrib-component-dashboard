@@ -57,9 +57,17 @@ class YADClass {
       console.log('connected');
       window.clearTimeout(self.reconnectTimer);
       self.connected = true;
-      Object.values(self.yadElements).forEach(function(yadElement) {
-        self.sendElementInitMsgToNR(yadElement);
-      });
+      Object.values(self.yadElements)
+        .forEach(function(yadElement) {
+          self.sendElementInitMsgToNR(yadElement);
+        });
+      Object.values(self.yadElements)
+        .filter(function(yadElement) {
+          return typeof yadElement._onSocketConnected === 'function';
+        })
+        .forEach(function(yadElement) {
+          yadElement._onSocketConnected();
+        });
     });
 
     this.socket.on('disconnect', function () {
@@ -70,6 +78,13 @@ class YADClass {
         self.socket.connect();
         console.log('reconnect attempt');
       }, 1000);
+      Object.values(self.yadElements)
+        .filter(function(yadElement) {
+          return typeof yadElement._onSocketDisconnected === 'function';
+        })
+        .forEach(function(yadElement) {
+          yadElement._onSocketDisconnected();
+        });
     });
 
     this.socket.on('reconnect_attempt', function () {
