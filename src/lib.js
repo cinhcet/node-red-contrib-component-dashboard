@@ -144,7 +144,7 @@ class YADClass {
       yadElement._yadConnectedInit = true;
       if(!yadElement.noMsg) {
         if(yadElement.id === '') {
-          console.log('Please specify an ID for that element!');
+          console.log('Please specify an ID for element', yadElement);
         } else {
           self.addYadElement(yadElement);
           if(self.connected) {
