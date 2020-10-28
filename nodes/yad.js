@@ -55,7 +55,10 @@ module.exports = function(RED) {
     var socketIoPath = join(fullPath, 'socket.io');
 
     if(!socketIOInstances.has(node.yadPath)) {
-      let socketIOInstance = socketIO(server, {path: socketIoPath});
+      let socketIOInstance = socketIO(server, {
+        path: socketIoPath,
+        cookiePath: RED.settings.httpNodeRoot
+      });
       socketIOInstance.use(function(socket, next) {
         if(socket.handshake.xdomain === false) {
           return next();
