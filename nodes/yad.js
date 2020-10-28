@@ -188,7 +188,12 @@ module.exports = function(RED) {
       (Array.isArray(msg._socketid) ? msg._socketid : [msg._socketid])
         .forEach(function(socketId) {
           if(typeof socketId === 'string') {
-            node.socketList[socketId].emit('fromNR', JSON.stringify(sendMsg));
+            const socket = node.socketList[socketId];
+            if(socket) {
+              socket.emit('fromNR', JSON.stringify(sendMsg));
+            } else {
+              elementNode.warn(`Cannot send message: unknown socket ID ${socketId}`);
+            }
           } else {
             elementNode.warn('_socketid must be a string or a string array');
           }
