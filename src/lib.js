@@ -26,17 +26,20 @@ class YADClass {
 
   addYadElement(yadElement) {
     var elementID = yadElement.elementId;
-    if(!this.yadElements.hasOwnProperty(elementID)) {
-      this.yadElements[elementID] = yadElement;
-    } else {
-      console.log('There is an element with elementID ' + elementID + ' already!');
-    }
+    (this.yadElements[elementID] || (this.yadElements[elementID] = [])).push(yadElement);
   }
 
   removeYadElement(yadElement) {
     var elementID = yadElement.elementId;
-    if(this.yadElements.hasOwnProperty(elementID)) {
-      delete this.yadElements[elementID];
+    var elementBucket = this.yadElements[elementID];
+    if(elementBucket) {
+      var elementIndex = elementBucket.indexOf(yadElement);
+      if(elementIndex >= 0) {
+        elementBucket.splice(elementIndex, 1);
+        if(elementBucket.length === 0) {
+          delete this.yadElements[elementID];
+        }
+      }
     }
   }
 
@@ -50,18 +53,20 @@ class YADClass {
 
   initializeApp() {
     var self = this;
-    console.log('initApp');
+    console.log('initializing YAD...');
 
     this.socket = io({path: location.pathname + 'socket.io'});
     this.socket.on('connect', function () {
-      console.log('connected');
+      console.log('YAD connected to server');
       window.clearTimeout(self.reconnectTimer);
       self.connected = true;
       Object.values(self.yadElements)
+        .flat()
         .forEach(function(yadElement) {
           self.sendElementInitMsgToNR(yadElement);
         });
       Object.values(self.yadElements)
+        .flat()
         .filter(function(yadElement) {
           return typeof yadElement._onSocketConnected === 'function';
         })
@@ -71,14 +76,15 @@ class YADClass {
     });
 
     this.socket.on('disconnect', function () {
-      console.log('disconnected');
+      console.log('YAD disconnected from server');
       self.connected = false;
       self.reconnectTimer = window.setTimeout(function() {
+        console.log('YAD attempting to reconnect to server...');
         self.socket.close();
         self.socket.connect();
-        console.log('reconnect attempt');
       }, 1000);
       Object.values(self.yadElements)
+        .flat()
         .filter(function(yadElement) {
           return typeof yadElement._onSocketDisconnected === 'function';
         })
@@ -88,27 +94,26 @@ class YADClass {
     });
 
     this.socket.on('reconnect_attempt', function () {
-      console.log('reconnect attempt');
+      console.log('YAD attempting to reconnect to server...');
     });
 
     this.socket.on('fromNR', function(msg) {
       msg = JSON.parse(msg);
       if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg') && msg.hasOwnProperty('type')) {
-        let elementID = msg.elementID;
-        if(self.yadElements.hasOwnProperty(elementID)) {
-          let yadElement = self.yadElements[elementID];
-          let type = msg.type;
-          if(type === 'msg' || type === 'replayMsg') {
-            if(typeof yadElement.nodeRedMsg === 'function') {
-              yadElement.nodeRedMsg(msg.msg);
-            }
-          } else if(type === 'initMsgOC') {
-            if(typeof yadElement.nodeRedInitMsgOnConnect === 'function') {
-              yadElement.nodeRedInitMsgOnConnect(msg.msg);
+        if(self.yadElements.hasOwnProperty(msg.elementID)) {
+          for(const yadElement of self.yadElements[msg.elementID]) {
+            if(msg.type === 'msg' || msg.type === 'replayMsg') {
+              if(typeof yadElement.nodeRedMsg === 'function') {
+                yadElement.nodeRedMsg(msg.msg);
+              }
+            } else if(msg.type === 'initMsgOC') {
+              if(typeof yadElement.nodeRedInitMsgOnConnect === 'function') {
+                yadElement.nodeRedInitMsgOnConnect(msg.msg);
+              }
             }
           }
         } else {
-          console.log('No element with elemID ' + elementID + ' registered');
+          console.log('No element registered with either id or yad-id ' + msg.elementID);
           // TODO send message to node-red in this case!
           // TODO general check for all ids of node-red also??!??
         }
@@ -123,7 +128,9 @@ class YADClass {
 
     Object.defineProperty(yadElement, 'elementId', {
       get: function () {
-        if(yadElement.parentId === '') {
+        if(yadElement.hasAttribute('yad-id')) {
+          return yadElement.getAttribute('yad-id');
+        } else if(yadElement.parentId === '') {
           return yadElement.id;
         } else {
           return yadElement.parentId + '_' + yadElement.id;
@@ -132,11 +139,7 @@ class YADClass {
     });
     Object.defineProperty(yadElement, 'parentId', {
       get: function () {
-        if(yadElement.hasAttribute('parentId')) {
-          return yadElement.getAttribute('parentId');
-        } else {
-          return '';
-        }
+        return yadElement.getAttribute('parentId') || '';
       }
     });
     Object.defineProperty(yadElement, 'noMsg', {
@@ -144,7 +147,7 @@ class YADClass {
         return yadElement.hasAttribute('no-msg');
       }
     });
- 
+
     yadElement._sendToNR = function(msg) {
       if(!yadElement.noMsg) {
         self.sendMessageToNR(yadElement.elementId, msg);
@@ -155,11 +158,13 @@ class YADClass {
     }
 
     yadElement._connectedCallbackHelper = function() {
-      if(yadElement._yadConnectedInit) return;
+      if(yadElement._yadConnectedInit) {
+        return;
+      }
       yadElement._yadConnectedInit = true;
       if(!yadElement.noMsg) {
-        if(yadElement.id === '') {
-          console.log('Please specify an ID for element', yadElement);
+        if(yadElement.id === '' && !yadElement.hasAttribute('yad-id')) {
+          console.log('Please specify either id or yad-id attribute for element', yadElement);
         } else {
           self.addYadElement(yadElement);
           if(self.connected) {
@@ -169,7 +174,6 @@ class YADClass {
       }
     }
   }
-
 
   // AJAX related methods
   ajaxCall(yadElement, params, callback) {
@@ -185,7 +189,6 @@ class YADClass {
         if(callback) callback(data);
       });
   }
-
 }
 
 var YAD = new YADClass();
