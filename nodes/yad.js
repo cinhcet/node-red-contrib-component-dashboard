@@ -110,7 +110,8 @@ module.exports = function(RED) {
       // emit event when new ui client connects
       node.eventEmitter.emit('newClientConnected', {
         _socketid: socket.id,
-        _cookies: socket.handshake.headers.cookie
+        _cookies: socket.handshake.headers.cookie,
+        _useragent: socket.handshake.headers['user-agent']
       });
 
       // receive message from ui
