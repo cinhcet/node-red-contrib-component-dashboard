@@ -153,7 +153,8 @@ module.exports = function(RED) {
         // emit event when ui client disconnects
         node.eventEmitter.emit('clientDisconnected', {
           _socketid: socket.id,
-          _cookies: socket.handshake.headers.cookie
+          _cookies: socket.handshake.headers.cookie,
+          _useragent: socket.handshake.headers['user-agent']
         });
       });
     });
