@@ -185,29 +185,33 @@ module.exports = function(RED) {
 
   yad.prototype.sendMessage = function(elementNode, msg, replayMsgId) {
     var node = this;
-    var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
-    if(msg.hasOwnProperty('_socketid')) {
-      (Array.isArray(msg._socketid) ? msg._socketid : [msg._socketid])
-        .forEach(function(socketId) {
-          if(typeof socketId === 'string') {
-            const socket = node.socketList[socketId];
-            if(socket) {
-              socket.emit('fromNR', JSON.stringify(sendMsg));
-            }
-          } else {
-            elementNode.warn('_socketid must be a string or a string array');
-          }
-        });
+    var sendMsg = {elementID: msg._elementid || elementNode.elementID, msg: msg, type: 'msg'};
+    if(!sendMsg.elementID) {
+      elementNode.warn('Element ID must either be configured in node or specified by msg._elementid');
     } else {
-      node.io.emit('fromNR', JSON.stringify(sendMsg));
-    }
-
-    // optional save message for replay when a new client connects
-    if(replayMsgId) {
-      if(typeof replayMsgId === 'string') {
-        elementNode.replayMessages[replayMsgId] = msg;
+      if(msg.hasOwnProperty('_socketid')) {
+        (Array.isArray(msg._socketid) ? msg._socketid : [msg._socketid])
+          .forEach(function(socketId) {
+            if(typeof socketId === 'string') {
+              const socket = node.socketList[socketId];
+              if(socket) {
+                socket.emit('fromNR', JSON.stringify(sendMsg));
+              }
+            } else {
+              elementNode.warn('_socketid must be a string or a string array');
+            }
+          });
       } else {
-        elementNode.warn('replayMsgId is not a string');
+        node.io.emit('fromNR', JSON.stringify(sendMsg));
+      }
+
+      // optional save message for replay when a new client connects
+      if(replayMsgId) {
+        if(typeof replayMsgId === 'string') {
+          elementNode.replayMessages[replayMsgId] = msg;
+        } else {
+          elementNode.warn('replayMsgId is not a string');
+        }
       }
     }
   }
