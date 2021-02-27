@@ -21,17 +21,44 @@ module.exports = function(RED) {
     RED.nodes.createNode(this, config);
     var node = this;
     node.config = config;
-    node.yad = RED.nodes.getNode(node.config.yad);
-
-    function newClientConnectedCallback() {
-      node.send({payload: 'newClientConnected'});
+    
+    function registerClientEventHandlers(yadConfiguration) {
+      function sendConnectionMessage(message) {
+        node.send({
+          payload: 'newClientConnected',
+          _dashboard: yadConfiguration.name,
+          ...message
+        });
+      }
+  
+      function sendDisconnectionMessage(message) {
+        node.send({
+          payload: 'clientDisconnected',
+          _dashboard: yadConfiguration.name,
+          ...message
+        });
+      }
+  
+      yadConfiguration.eventEmitter.on('newClientConnected', sendConnectionMessage);
+      yadConfiguration.eventEmitter.on('clientDisconnected', sendDisconnectionMessage);
+  
+      node.on('close', function() {
+        yadConfiguration.eventEmitter.removeListener('newClientConnected', sendConnectionMessage);
+        yadConfiguration.eventEmitter.removeListener('clientDisconnected', sendDisconnectionMessage);
+      });
     }
 
-    node.yad.eventEmitter.on('newClientConnected', newClientConnectedCallback);
-
-    node.on('close', function() {
-      node.yad.eventEmitter.removeListener('newClientConnected', newClientConnectedCallback);
-    });
+    if(node.config.yad) {
+      var yadConfiguration = RED.nodes.getNode(node.config.yad);
+      registerClientEventHandlers(yadConfiguration);
+    } else {
+      RED.nodes.eachNode(function(n) {
+        if(n.type === 'yad-configuration') {
+          var yadConfiguration = RED.nodes.getNode(n.id);
+          registerClientEventHandlers(yadConfiguration);
+        }
+      });
+    }
   }
 
   RED.nodes.registerType("yad-client-node", yadNode);

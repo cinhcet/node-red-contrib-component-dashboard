@@ -1,6 +1,6 @@
 <!--
   Copyright (c) 2020 cinhcet
- 
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -21,7 +21,7 @@
     defaults: {
       yad: {
         value: "",
-        required: true,
+        required: false,
         type: "yad-configuration"
       },
       name: {
@@ -32,7 +32,7 @@
     outputs: 1,
     icon: "yad-icon.svg",
     label: function() {
-      return this.name || "ui client connect";
+      return this.name || "client node";
     },
     paletteLabel: 'client node'
   });
@@ -50,5 +50,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="yad-client-node">
-  <p>Emits message if new ui client connects</p>
+  <p>Emits messages when UI clients connect to, or disconnect from, the configured dashboards.</p>
+  <p>If you specify a YAD Configuration, the node will notify about user activity regarding to the related dashboard only.
+    Otherwise, the node will notify about any configured dashboard.</p>
 </script>

@@ -1,6 +1,6 @@
 <!--
   Copyright (c) 2020 cinhcet
- 
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -25,8 +25,7 @@
         type: "yad-configuration"
       },
       elementID: {
-        value: "",
-        required: true
+        value: ""
       },
       replayLastMessage: {
         value: false
@@ -42,8 +41,8 @@
     outputs: 1,
     icon: "yad-icon.svg",
     label: function() {
-      return this.name || this.elementID;
-    }, 
+      return this.name || this.elementID || 'universal node';
+    },
     paletteLabel: 'universal node'
   });
 </script>

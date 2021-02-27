@@ -55,7 +55,10 @@ module.exports = function(RED) {
     var socketIoPath = join(fullPath, 'socket.io');
 
     if(!socketIOInstances.has(node.yadPath)) {
-      let socketIOInstance = socketIO(server, {path: socketIoPath});
+      let socketIOInstance = socketIO(server, {
+        path: socketIoPath,
+        cookiePath: RED.settings.httpNodeRoot.replace(/\/$/, '') || '/'
+      });
       socketIOInstance.use(function(socket, next) {
         if(socket.handshake.xdomain === false) {
           return next();
@@ -105,13 +108,20 @@ module.exports = function(RED) {
       node.socketList[socket.id] = socket;
 
       // emit event when new ui client connects
-      node.eventEmitter.emit('newClientConnected');
+      node.eventEmitter.emit('newClientConnected', {
+        _socketid: socket.id,
+        _cookies: socket.handshake.headers.cookie,
+        _useragent: socket.handshake.headers['user-agent']
+      });
 
       // receive message from ui
       socket.on('toNR', function(msg) {
-        if(msg.hasOwnProperty('elementID') && msg.hasOwnProperty('msg')) {
-          if(node.elementNodes.hasOwnProperty(msg.elementID)) {
-            node.elementNodes[msg.elementID].recMessage(msg.msg);
+        if(msg.hasOwnProperty('msg')) {
+          msg.msg._socketid = socket.id;
+          if(msg.hasOwnProperty('elementID')) {
+            if(node.elementNodes.hasOwnProperty(msg.elementID)) {
+              node.elementNodes[msg.elementID].recMessage(msg.msg);
+            }
           }
         }
       });
@@ -140,6 +150,13 @@ module.exports = function(RED) {
 
       socket.on('disconnect', function() {
         delete node.socketList[socket.id];
+
+        // emit event when ui client disconnects
+        node.eventEmitter.emit('clientDisconnected', {
+          _socketid: socket.id,
+          _cookies: socket.handshake.headers.cookie,
+          _useragent: socket.handshake.headers['user-agent']
+        });
       });
     });
 
@@ -168,15 +185,33 @@ module.exports = function(RED) {
 
   yad.prototype.sendMessage = function(elementNode, msg, replayMsgId) {
     var node = this;
-    var sendMsg = {elementID: elementNode.elementID, msg: msg, type: 'msg'};
-    node.io.emit('fromNR', JSON.stringify(sendMsg));
-
-    // optional save message for replay when a new client connects
-    if(replayMsgId) {
-      if(typeof replayMsgId === 'string') {
-        elementNode.replayMessages[replayMsgId] = msg;
+    var sendMsg = {elementID: msg._elementid || elementNode.elementID, msg: msg, type: 'msg'};
+    if(!sendMsg.elementID) {
+      elementNode.warn('Element ID must either be configured in node or specified by msg._elementid');
+    } else {
+      if(msg.hasOwnProperty('_socketid')) {
+        (Array.isArray(msg._socketid) ? msg._socketid : [msg._socketid])
+          .forEach(function(socketId) {
+            if(typeof socketId === 'string') {
+              const socket = node.socketList[socketId];
+              if(socket) {
+                socket.emit('fromNR', JSON.stringify(sendMsg));
+              }
+            } else {
+              elementNode.warn('_socketid must be a string or a string array');
+            }
+          });
       } else {
-        elementNode.warn('replayMsgId is not a string');
+        node.io.emit('fromNR', JSON.stringify(sendMsg));
+      }
+
+      // optional save message for replay when a new client connects
+      if(replayMsgId) {
+        if(typeof replayMsgId === 'string') {
+          elementNode.replayMessages[replayMsgId] = msg;
+        } else {
+          elementNode.warn('replayMsgId is not a string');
+        }
       }
     }
   }
@@ -276,7 +311,7 @@ module.exports = function(RED) {
       node.copySrcFile('../templates/bareboneDashboardTemplate/index.html');
       node.copySrcFile('../templates/bareboneDashboardTemplate/widgets.js');
       node.copySrcFile('../templates/bareboneDashboardTemplate/style.css');
-      
+
       node.createManifestJSON();
 
     } catch(e) {
