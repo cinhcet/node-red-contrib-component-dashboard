@@ -1,5 +1,5 @@
 import YAD from 'node-red-contrib-component-dashboard/src/lib.js';
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 
 class Component extends LitElement {
 

@@ -56,13 +56,6 @@ module.exports = function(RED) {
 
     if(!socketIOInstances.has(node.yadPath)) {
       let socketIOInstance = socketIO(server, {path: socketIoPath});
-      socketIOInstance.use(function(socket, next) {
-        if(socket.handshake.xdomain === false) {
-          return next();
-        } else {
-          socket.disconnect(true);
-        }
-      });
       socketIOInstances.set(node.yadPath, socketIOInstance);
     }
     node.io = socketIOInstances.get(node.yadPath);
@@ -271,7 +264,7 @@ module.exports = function(RED) {
       node.yadFolder = yadFolder;
 
       node.copySrcFile('../templates/main.js');
-      node.copySrcFile('../templates/bundle.js');
+      node.copySrcFile('../templates/bundle.mjs');
       node.copySrcFile('../templates/createWidget.js');
       node.copySrcFile('../templates/bareboneDashboardTemplate/index.html');
       node.copySrcFile('../templates/bareboneDashboardTemplate/widgets.js');
